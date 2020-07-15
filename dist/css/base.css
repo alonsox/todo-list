@@ -1,0 +1,112 @@
+/* This file contains all the things that affect the general style of the 
+ * elements in the page and not a specific component of it.
+ * Must be included right after reset.css */
+
+:root {
+    /* COLORS */
+    --background: white;
+    --foreground: black;
+
+    /* FONT SIZES */
+    --font-huge: 1.9rem;
+    --font-larger: 1.56rem;
+    --font-large: 1.25rem;
+    --font-normal: 1rem;
+    --font-small: 0.9rem;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+h1 {
+    font-size: var(--font-huge);
+}
+
+h2 {
+    font-size: var(--font-larger);
+}
+
+h3 {
+    font-size: var(--font-large);
+}
+
+p {
+    font-size: var(--font-normal);
+}
+
+button {
+    padding: 0.4rem 0.7rem;
+    font-size: var(--font-normal);
+    font-weight: bold;
+    border: none;
+    outline: none;
+}
+
+a {
+    color: dodgerblue;
+}
+
+input[type="text"], 
+input[type="number"], 
+textarea,
+select {
+    outline: none;
+    border: 1px solid #808080b6;
+    background-color: white;
+    padding: 0.4rem;
+    font-size: var(--font-normal);
+    font-family: inherit;
+}
+
+
+table, 
+th, 
+td {
+    border-collapse: collapse;
+}
+
+th, 
+td {
+    text-align: center;
+    padding: 0.5rem 2rem;
+}
+
+
+
+/**************
+    STATES 
+***************/
+button:hover {
+    cursor: pointer;
+    opacity: 0.85;
+    transform: scale(1.05);
+}
+
+input[type="text"]:focus, 
+input[type="number"]:focus, 
+textarea:focus,
+select:focus {
+    outline: none;
+    border: 1px solid #0a80f7;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+.is-error-msg {
+    color: red;
+    font-weight: bold;
+}
