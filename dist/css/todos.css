@@ -1,0 +1,91 @@
+
+.todos-l {
+    /* background-color: green; */
+    display: flex;
+    flex-direction: column;
+    width: var(--todos-width);
+    box-shadow: 3px 0px 4px -4px #949494;
+}
+
+.project-info-l {
+    /* background-color: red; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    
+    padding: 1.4rem 1rem;
+    /* border-bottom: 1px solid gray; */
+    box-shadow: 0px 3px 4px -4px #949494;
+}
+
+
+/**************
+    MODELS 
+***************/
+.project-name {
+    font-weight: 500;
+    padding-bottom: 0.3rem;
+}
+
+.project-stats {
+    font-size: var(--font-small);
+    color: gray;
+}
+
+.todo-add-btn {
+    background-color: rgb(212, 208, 208);
+    padding: 0.2rem 0.5rem;
+    border-radius: 5px;
+}
+
+
+
+.list-title {
+    background-color: #dbdbdb;
+    padding: 0.3rem 1rem;
+    box-shadow: 0px 3px 4px -4px #949494;
+}
+
+.todo-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    padding: 1rem;
+    box-shadow: 0px 3px 4px -4px #949494;
+}
+
+.todo-check {
+    color: dodgerblue;
+    padding-right: 1rem ;
+}
+
+.todo-name {
+    padding-bottom: 0.2rem;
+    font-weight: 500;
+}
+
+.todo-due-date {
+    color: gray;
+    font-size: var(--font-small);
+}
+
+
+
+/**************
+    STATES 
+***************/
+.todo-check:hover {
+    cursor: pointer;
+}
+
+.todo-item-active {
+    background-color: rgba(128, 128, 128, 0.15);
+} 
+
+.todo-add-btn:hover {
+    cursor: pointer;
+    opacity: 0.85;
+    transform: scale(1.1);
+}

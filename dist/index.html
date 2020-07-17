@@ -11,11 +11,12 @@
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/list-sidebar.css">
+    <link rel="stylesheet" href="./css/todos.css">
     <script defer src="./js/bundle.js"></script>
 </head>
 <body>
     <div class="content-l">
-        <div class="lists-sidebar-l">
+        <sidebar class="lists-sidebar-l">
             <section>
                 <input type="text" class="list-searchbar" placeholder="Search list">
                 <hr>
@@ -42,25 +43,72 @@
                     <i class="material-icons icon-size-normal add-btn">add</i>
                 </div>
             </section>
-        </div>
+        </sidebar>
         
         <main class="todos-l">
-            <!-- <section class="project-info-l">
+            <section class="project-info-l">
                 <div>
-                    <h1 class="project-name">Project Name</h1>
+                    <h2 class="project-name">Project Name</h2>
                     <p class="project-stats">XX pending YY completed</p>
                 </div>
                 <div>
-                    <button class="add-btn">+</button>
+                    <i class="material-icons icon-size-normal todo-add-btn">add</i>
                 </div>
             </section>
-            <input type="text" placeholder="Search task">
-            <div class="tasks-list">
+
+            <div class="todos-container">
                 
-            </div> -->
+                <div class="list-title">Shores</div>
+                <div class="todo-item todo-item-active">
+                    <div class="checkbox-wrapper">
+                        <i class="material-icons todo-check">check_box_outline_blank</i>   
+                    </div>
+
+                    <div class="todo-info">
+                        <h3 class="todo-name">Clean house</h3>
+                        <p class="todo-due-date">Due date: 2020/02/12</p>
+                    </div>
+                </div>
+
+
+                <div class="todo-item">
+                    <div class="checkbox-wrapper">
+                        <i class="material-icons todo-check">check_box_outline_blank</i>   
+                    </div>
+
+                    <div class="todo-info">
+                        <h3 class="todo-name">Clean house</h3>
+                        <p class="todo-due-date">Due date: 2020/02/12</p>
+                    </div>
+                </div>
+
+                <div class="list-title">Homework</div>
+                <div class="todo-item">
+                    <div class="checkbox-wrapper">
+                        <i class="material-icons todo-check">check_box_outline_blank</i>   
+                    </div>
+
+                    <div class="todo-info">
+                        <h3 class="todo-name">Math</h3>
+                        <p class="todo-due-date">Due date: 2020/02/12</p>
+                    </div>
+                </div>
+                <div class="todo-item">
+                    <div class="checkbox-wrapper">
+                        <i class="material-icons todo-check">check_box_outline_blank</i>   
+                    </div>
+
+                    <div class="todo-info">
+                        <h3 class="todo-name">Physics</h3>
+                        <p class="todo-due-date">Due date: 2020/02/12</p>
+                    </div>
+                </div>
+
+                <!-- TODOS ALL VIEW -->
+            </div>
         </main>
         
-        <aside class="edit-l">
+        <aside class="details-l">
             <!-- <h1>Edit task</h1>
             
             <button class="delete-btn">Delete task</button> -->
