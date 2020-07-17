@@ -2,14 +2,20 @@
     LAYOUTS
 ***************/
 .edit-l {
-    /* background-color: blue; */
-    display: flex;
-    flex-direction: column;
-
     width: var(--details-width);
     height: 100vh;
+
+    display: flex;
+    flex-direction: column;
 }
 
+.task-info-container-l {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
 
 /**************
     MODELS
@@ -104,6 +110,15 @@
     
     color: red;
     padding: 0.7rem 0;
+}
+
+
+/* NO TASK */
+.no-task {
+    text-align: center;
+    padding: 1.5rem 0;
+    font-weight: normal;
+    color: #535353;
 }
 
 /**************
