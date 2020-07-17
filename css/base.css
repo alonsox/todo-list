@@ -5,7 +5,7 @@
 :root {
     /* COLORS */
     --background: white;
-    --foreground: black;
+    --foreground: #262626;
 
     /* FONT SIZES */
     --font-huge: 1.9rem;
