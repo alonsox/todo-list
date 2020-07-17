@@ -10,36 +10,37 @@
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/base.css">
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/list-sidebar.css">
     <script defer src="./js/bundle.js"></script>
 </head>
 <body>
     <div class="content-l">
         <div class="lists-sidebar-l">
-            <section class="task-lists">
+            <section>
                 <input type="text" class="list-searchbar" placeholder="Search list">
                 <hr>
-                <div class="list-item">
-                    <div class="list-name">
-                        <i class="material-icons icon-size-24">menu</i> 
+                <div class="list-item list-item-active">
+                    <div class="list-name list-item-indent">
+                        <i class="material-icons icon-size-normal list-icon">event_note</i> 
                         <span>All</span>
                     </div>
                 </div>
 
-                <div class="list-item list-item-active">
-                    <div class="list-name">
-                        <i class="material-icons icon-size-24">menu</i> 
+                <div class="list-item">
+                    <div class="list-name list-item-indent">
+                        <i class="material-icons icon-size-normal list-icon">menu</i> 
                         <span>Shores</span>
                     </div>
-                    <i class="material-icons icon-size-18">clear</i> 
+                    <i class="material-icons icon-size-small delete-list-btn list-item-indent">clear</i> 
                 </div>
             </section>
             
             <section>
                 <hr>
-                <input type="text" placeholder="New project">
-                <button class="add-btn">
-                    <i class="material-icons">add</i>
-                </button>
+                <div class="new-list-info">
+                    <input type="text" placeholder="New list's name" class="new-list-searchbar">
+                    <i class="material-icons icon-size-normal add-btn">add</i>
+                </div>
             </section>
         </div>
         
