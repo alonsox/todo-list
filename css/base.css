@@ -13,6 +13,11 @@
     --font-large: 1.25rem;
     --font-normal: 1rem;
     --font-small: 0.9rem;
+
+    /* PANEL'S WIDTHS */
+    --list-sidebar-width: 20%;
+    --todos-width: 50%;
+    --details-width: 30%;
 }
 
 html, body {
