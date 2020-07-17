@@ -5,12 +5,4 @@
     width: 100%;
 }
 
-.details-l {
-    /* background-color: blue; */
-    display: flex;
-    flex-direction: column;
-    width: var(--details-width);
-    height: 100vh;
-}
-
 

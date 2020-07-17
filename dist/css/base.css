@@ -112,7 +112,6 @@ td {
 button:hover {
     cursor: pointer;
     opacity: 0.85;
-    transform: scale(1.05);
 }
 
 input[type="text"]:focus, 

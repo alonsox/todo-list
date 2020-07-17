@@ -12,9 +12,11 @@
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/list-sidebar.css">
     <link rel="stylesheet" href="./css/todos.css">
+    <link rel="stylesheet" href="./css/details.css">
     <script defer src="./js/bundle.js"></script>
 </head>
 <body>
+
     <div class="content-l">
         <sidebar class="lists-sidebar-l">
             <section>
@@ -103,15 +105,54 @@
                         <p class="todo-due-date">Due date: 2020/02/12</p>
                     </div>
                 </div>
-
-                <!-- TODOS ALL VIEW -->
             </div>
         </main>
         
-        <aside class="details-l">
-            <!-- <h1>Edit task</h1>
+        <aside class="edit-l">
+            <h3 class="edit-title">Edit Task</h3>
+           
+            <div class="todo-title">
+                <i class="material-icons">title</i> 
+                <span class="field-text">Task title</span> 
+            </div>
+
+            <div class="todo-list">
+                <i class="material-icons">menu</i> 
+                <span class="field-text">All</span> 
+            </div>
+
+
+            <div class="todo-date">
+                <i class="material-icons">event_note</i> 
+                <span class="field-text">2020/07/07</span> 
+            </div>
+            <div class="todo-priority">
+                <div class="priority-title">
+                    <i class="material-icons">info_outline</i> 
+                    <span class="text-info">Priority</span> 
+                </div>
+                <div class="priority-container">
+                    <div class="priority-item">
+                        <i class="material-icons priority-radio-btn">radio_button_unchecked</i>
+                        <label>Low</label>
+                    </div>
+                    <div class="priority-item">
+                        <i class="material-icons priority-radio-btn">radio_button_checked</i>
+                        <label>Medium</label>
+                    </div>
+                    <div class="priority-item">
+                        <i class="material-icons priority-radio-btn">radio_button_unchecked</i>
+                        <label>High</label>
+                    </div>
+                </div>
+            </div>
             
-            <button class="delete-btn">Delete task</button> -->
+            <textarea class="todo-notes" placeholder="Add a note..."></textarea>
+
+            <button class="delete-btn">
+                <i class="material-icons">delete</i>   
+                Delete task
+            </button>
         </aside>
     </div>
 </body>
