@@ -1,0 +1,89 @@
+
+/**************
+    LAYOUTS 
+***************/
+.lists-sidebar-l {
+    background-color: #f3f2f0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: left;
+
+    width: 20%;
+    min-width: fit-content;
+
+    padding: 1rem 0; 
+    box-shadow: 0px 0px 6px -1px #949494;
+
+    --sidebar-side-padding: 0.6rem;
+}
+
+
+/**************
+    MODELS
+***************/
+.list-searchbar {
+    width: calc(100% - 2*var(--sidebar-side-padding));
+    margin-left: var(--sidebar-side-padding);
+}
+
+.list-item {
+    color: #262626;
+    font-size: var(--font-normal);
+    padding: 0.3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.list-item-indent {
+    margin: 0 var(--sidebar-side-padding);
+}
+
+.list-name {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+}
+
+.list-icon {
+    margin-right: 0.8rem;
+}
+
+
+.new-list-info {
+    width: calc(100% - 2*var(--sidebar-side-padding));
+    margin: 0 var(--sidebar-side-padding);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.new-list-searchbar {
+    flex-grow: 1;
+    margin-right: 0.5rem;
+}
+
+.add-btn {
+    background-color: #838282;
+    padding: 0.1rem;
+    border-radius: 100%;
+}
+
+
+
+/**************
+    STATES
+***************/
+.list-item-active {
+    background-color: #e0dedf;
+}
+
+.add-btn:hover, 
+.delete-list-btn:hover {
+    cursor: pointer;
+    opacity: 0.85;
+    transform: scale(1.2);
+}
