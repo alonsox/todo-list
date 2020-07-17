@@ -5,11 +5,65 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Todo List</title>
     <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="https://fonts.googleapis.com/css2?family=Lato&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/reset.css">
     <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/index.css">
     <script defer src="./js/bundle.js"></script>
 </head>
 <body>
-    <h1>TODO List</h1>
+    <div class="content-l">
+        <div class="lists-sidebar-l">
+            <section class="task-lists">
+                <input type="text" class="list-searchbar" placeholder="Search list">
+                <hr>
+                <div class="list-item">
+                    <div class="list-name">
+                        <i class="material-icons icon-size-24">menu</i> 
+                        <span>All</span>
+                    </div>
+                </div>
+
+                <div class="list-item list-item-active">
+                    <div class="list-name">
+                        <i class="material-icons icon-size-24">menu</i> 
+                        <span>Shores</span>
+                    </div>
+                    <i class="material-icons icon-size-18">clear</i> 
+                </div>
+            </section>
+            
+            <section>
+                <hr>
+                <input type="text" placeholder="New project">
+                <button class="add-btn">
+                    <i class="material-icons">add</i>
+                </button>
+            </section>
+        </div>
+        
+        <main class="todos-l">
+            <!-- <section class="project-info-l">
+                <div>
+                    <h1 class="project-name">Project Name</h1>
+                    <p class="project-stats">XX pending YY completed</p>
+                </div>
+                <div>
+                    <button class="add-btn">+</button>
+                </div>
+            </section>
+            <input type="text" placeholder="Search task">
+            <div class="tasks-list">
+                
+            </div> -->
+        </main>
+        
+        <aside class="edit-l">
+            <!-- <h1>Edit task</h1>
+            
+            <button class="delete-btn">Delete task</button> -->
+        </aside>
+    </div>
 </body>
 </html>
