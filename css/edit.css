@@ -108,7 +108,9 @@
     align-items: center;
     justify-content: center;
     
-    color: red;
+    /* color: red; */
+    color: #d62222;
+    font-weight: 500;
     padding: 0.7rem 0;
 }
 
