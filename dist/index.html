@@ -46,10 +46,14 @@
         </sidebar>
         
         <main class="todos-l">
-            <section class="project-info-l">
+            <section class="list-info-l">
                 <div>
-                    <h2 class="project-name">Project Name</h2>
-                    <p class="project-stats">XX pending YY completed</p>
+                    <h1 class="task-list-name">List Name</h1>
+                    <div>
+                        <span class="list-stat">XX Tasks</span>    
+                        <span class="list-stat">XX Done</span>    
+                        <span class="list-stat">XX Pending</span>    
+                    </div>
                 </div>
                 <div>
                     <i class="material-icons icon-size-normal todo-add-btn">add</i>
@@ -57,52 +61,58 @@
             </section>
 
             <div class="todos-container">
-                
                 <div class="list-title">Shores</div>
-                <div class="todo-item todo-item-active">
-                    <div class="checkbox-wrapper">
-                        <i class="material-icons todo-check">check_box_outline_blank</i>   
-                    </div>
+                
+                <div class="todo-item-wrapper">
+                    <div class="priority-indicator high-priority"></div>
 
-                    <div class="todo-info">
-                        <h3 class="todo-name">Clean house</h3>
-                        <p class="todo-due-date">Due date: 2020/02/12</p>
-                    </div>
-                </div>
-
-
-                <div class="todo-item">
-                    <div class="checkbox-wrapper">
-                        <i class="material-icons todo-check">check_box_outline_blank</i>   
-                    </div>
-
-                    <div class="todo-info">
-                        <h3 class="todo-name">Clean house</h3>
-                        <p class="todo-due-date">Due date: 2020/02/12</p>
+                    <div class="todo-item todo-item-active">
+                        <div class="checkbox-wrapper">
+                            <i class="material-icons todo-check">check_box_outline_blank</i>   
+                        </div>
+    
+                        <div class="todo-info">
+                            <h3 class="todo-name">Clean house</h3>
+                            <p class="todo-due-date">Due date: 2020/02/12</p>
+                        </div>
                     </div>
                 </div>
+
+                <div class="todo-item-wrapper">
+                    <div class="priority-indicator medium-priority"></div>
+
+                    <div class="todo-item">
+                        <div class="checkbox-wrapper">
+                            <i class="material-icons todo-check">check_box_outline_blank</i>   
+                        </div>
+    
+                        <div class="todo-info">
+                            <h3 class="todo-name">Clean house</h3>
+                            <p class="todo-due-date">Due date: 2020/02/12</p>
+                        </div>
+                    </div>
+    
+                </div>
+
 
                 <div class="list-title">Homework</div>
-                <div class="todo-item">
-                    <div class="checkbox-wrapper">
-                        <i class="material-icons todo-check">check_box_outline_blank</i>   
-                    </div>
 
-                    <div class="todo-info">
-                        <h3 class="todo-name">Math</h3>
-                        <p class="todo-due-date">Due date: 2020/02/12</p>
-                    </div>
-                </div>
-                <div class="todo-item">
-                    <div class="checkbox-wrapper">
-                        <i class="material-icons todo-check">check_box_outline_blank</i>   
-                    </div>
+                <div class="todo-item-wrapper">
+                    <div class="priority-indicator low-priority"></div>
 
-                    <div class="todo-info">
-                        <h3 class="todo-name">Physics</h3>
-                        <p class="todo-due-date">Due date: 2020/02/12</p>
+                    <div class="todo-item">
+                        <div class="checkbox-wrapper">
+                            <i class="material-icons todo-check">check_box_outline_blank</i>   
+                        </div>
+    
+                        <div class="todo-info">
+                            <h3 class="todo-name">Physics</h3>
+                            <p class="todo-due-date">Due date: 2020/02/12</p>
+                        </div>
                     </div>
-                </div>
+                </div>              
+
+
             </div>
         </main>
         
