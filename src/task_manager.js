@@ -1,4 +1,5 @@
 import {newTask} from './task.js'
+import {PubSub} from './pubsub.js'
 
 const TaskManager = (function() {
     
@@ -11,6 +12,9 @@ const TaskManager = (function() {
 
         // SAVE CHANGES
         saveList(listName);
+
+        // NOTIFY CHANGES
+        PubSub.publish('LIST_CREATED', {listName});
     }
 
     function deleteList(listName) {
@@ -21,6 +25,9 @@ const TaskManager = (function() {
 
         // REMOVE FROM STORAGE
         localStorage.removeItem(listName);
+
+        // NOTIFY CHANGES
+        PubSub.publish('LIST_DELETED', {listName});
     }   
 
     /**
@@ -36,10 +43,18 @@ const TaskManager = (function() {
             createList(listName);
         }
 
-        taskLists[listName].push(newTask(taskInfo));
+        let task = newTask(taskInfo);
+        taskLists[listName].push();
 
         // SAVE CHANGES
         saveList(listName);
+
+        // NOTIFY CHANGES
+        PubSub.publish('TASK_CREATED', {
+            listName, 
+            taskInfo, 
+            taskId: task.getId()
+        });
     }
 
     function deleteTask(listName, taskId) {
@@ -56,6 +71,9 @@ const TaskManager = (function() {
 
         // SAVE CHANGES
         saveList(listName);
+
+        // NOTIFY CHANGES
+        PubSub.publish('TASK_DELETED', {listName, taskId});
     }
 
     function updateTask(listName, taskId, newTaskInfo) {
@@ -72,6 +90,9 @@ const TaskManager = (function() {
 
         // SAVE CHANGES
         saveList(listName);
+
+        // NOTIFY CHANGES
+        PubSub.publish('TASK_EDITED', {listName, taskId, taskInfo});
     }
 
     function findTaskIndexById(listName, taskId) {
@@ -122,6 +143,8 @@ const TaskManager = (function() {
         updateTask,
         deleteTask,
         load
-        
     }
 })();
+
+
+export {TaskManager}
