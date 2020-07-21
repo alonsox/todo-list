@@ -96,7 +96,7 @@ input[type="text"].ls_list-searchbar {
     border-top: 1px solid #bebebe;
 }
 
-.ls_new-list-searchbar {
+input[type="text"].ls_new-list-searchbar {
     flex-grow: 1;
     margin-right: 0.5rem;
 }
