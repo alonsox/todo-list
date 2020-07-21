@@ -1,3 +1,8 @@
+/* All the classes in this file will use the prefix 'ls_', which stands for 
+ * 'lists sidebar', to identify the class as belonging to this file. The only 
+ * exception is the 'lists-sidebar-l' class. 
+ */
+
 
 /**************
     LAYOUTS 
@@ -17,7 +22,7 @@
     box-shadow: 5px 0px 5px -5px #949494;
 
     --sidebar-side-padding: 0.6rem;
-    --aux-heigth: 3.1rem;
+    --aux-heigth: 3.2rem;
 }
 
 
@@ -25,7 +30,7 @@
     MODELS
 ***************/
 /* LIST SEARCHBAR */
-.list-searchbar-wrapper {
+.ls_list-searchbar-wrapper {
     width: 100%;
     padding: 0 var(--sidebar-side-padding);
 
@@ -37,19 +42,19 @@
     border-bottom: 1px solid #bebebe;
 }
 
-.list-searchbar {
+input[type="text"].ls_list-searchbar {
     width: 100%;
-    border: red;
 }
 
-.lists-container {
+/* LIST CONTAINER */
+.ls_lists-container {
     flex: 1;
     max-height: calc(100vh - 2*var(--aux-heigth));
     overflow-y: auto;
 }
 
-/* TASK LIST */
-.task-list {
+/* A TASK LIST ENTRY */
+.ls_tasks-list {
     font-size: var(--font-normal);
     padding: 0.3rem;
 
@@ -58,7 +63,7 @@
     justify-content: space-between;
 }
 
-.list-name {
+.ls_list-name {
     display: flex;
     align-items: center;
     justify-content: left;
@@ -66,42 +71,37 @@
     margin-left: var(--sidebar-side-padding);
 }
 
-.delete-list-btn {
-    margin-right: var(--sidebar-side-padding);
-}
-
-.all-text {
+.ls_all-lists-text {
     font-weight: 550;
 }
 
-.list-icon {
+.ls_list-icon {
+    color: #4287f1;
     margin-right: 0.8rem;
 }
 
-.list-icon {
-    color: #4287f1;
+.ls_delete-list-btn {
+    margin-right: var(--sidebar-side-padding);
 }
 
 
-/* NEW LIST */
-.new-list-info {
+/* NEW LIST INPUT */
+.ls_new-list-info {
     display: flex;
     flex-direction: row;
     align-items: center;
 
     padding: 0 var(--sidebar-side-padding);
-
     height: var(--aux-heigth);
-
     border-top: 1px solid #bebebe;
 }
 
-.new-list-searchbar {
+.ls_new-list-searchbar {
     flex-grow: 1;
     margin-right: 0.5rem;
 }
 
-.add-list-btn {
+.ls_add-list-btn {
     background-color: #4287f1;
     color: white;
     padding: 0.1rem;
@@ -112,21 +112,21 @@
 /**************
     STATES
 ***************/
-.task-list-active {
+.ls_task-list-active {
     background-color: #e0dedf;
 }
 
-.add-list-btn:hover, 
-.delete-list-btn:hover {
+.ls_add-list-btn:hover, 
+.ls_delete-list-btn:hover {
     cursor: pointer;
     opacity: 0.85;
 }
 
-.delete-list-btn:hover {
+.ls_delete-list-btn:hover {
     transform: scale(1.2);
 }
 
-.add-list-btn:hover { 
+.ls_add-list-btn:hover { 
     transform: scale(1.1);
 }
 
