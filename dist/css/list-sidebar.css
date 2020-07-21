@@ -13,10 +13,11 @@
     width: var(--list-sidebar-width);
     min-width: fit-content;
 
-    padding: 1rem 0; 
+    padding: 0; 
     box-shadow: 5px 0px 5px -5px #949494;
 
     --sidebar-side-padding: 0.6rem;
+    --aux-heigth: 3.1rem;
 }
 
 
@@ -26,10 +27,14 @@
 /* LIST SEARCHBAR */
 .list-searchbar-wrapper {
     width: 100%;
-    padding-bottom: 1.2rem;
-    padding-left: var(--sidebar-side-padding);
-    padding-right: var(--sidebar-side-padding);
-    
+    padding: 0 var(--sidebar-side-padding);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: var(--aux-heigth);
+    border-bottom: 1px solid #bebebe;
 }
 
 .list-searchbar {
@@ -37,6 +42,11 @@
     border: red;
 }
 
+.lists-container {
+    flex: 1;
+    max-height: calc(100vh - 2*var(--aux-heigth));
+    overflow-y: auto;
+}
 
 /* TASK LIST */
 .task-list {
@@ -78,10 +88,12 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    
-    padding-top: 1.2rem;
-    padding-left: var(--sidebar-side-padding);
-    padding-right: var(--sidebar-side-padding);
+
+    padding: 0 var(--sidebar-side-padding);
+
+    height: var(--aux-heigth);
+
+    border-top: 1px solid #bebebe;
 }
 
 .new-list-searchbar {
@@ -95,7 +107,6 @@
     padding: 0.1rem;
     border-radius: 100%;
 }
-
 
 
 /**************
@@ -118,3 +129,6 @@
 .add-list-btn:hover { 
     transform: scale(1.1);
 }
+
+
+
