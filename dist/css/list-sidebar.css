@@ -60,13 +60,12 @@
     margin-right: var(--sidebar-side-padding);
 }
 
-.list-all-icon,
-.list-icon {
-    margin-right: 0.8rem;
+.all-text {
+    font-weight: 550;
 }
 
-.list-all-icon {
-    color: #719a61;
+.list-icon {
+    margin-right: 0.8rem;
 }
 
 .list-icon {
