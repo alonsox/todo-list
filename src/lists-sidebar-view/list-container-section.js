@@ -37,6 +37,24 @@ function createListContainer() {
         PubSub.subscribe('LIST_NOT_DELETED', (data) => {
             alert(`List could not be deleted. Error: ${data.errorMsg}`);
         });
+
+        PubSub.subscribe('LIST_BEING_SEARCHED', (data) => {
+            
+            /* Select all lists */
+            let toHide = listsContainer.querySelectorAll(`[data-list-name]`);
+
+            /* Show only the lists that have 'data.text' in its name */
+            toHide.forEach((list) => {  
+                let listName = list.getAttribute('data-list-name');
+                if (listName.toLowerCase() == 'all') {
+                    // DO NOTHING
+                } else if (listName.includes(data.text)) {
+                    list.classList.remove('is-hidden');
+                } else {
+                    list.classList.add('is-hidden');
+                }
+            })
+        });
     }
 
     init();

@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { PubSub } from '../core/pubsub';
 
 function createListSearchbar() {
     
@@ -23,13 +24,14 @@ function createListSearchbar() {
 
     function initEvents() {
         $(searchbar).on('input', () => {
-
-
+            PubSub.publish('LIST_BEING_SEARCHED', {
+                text: getSearchBarContent()
+            });
         });
     }
 
     function getSearchBarContent() {
-        return searchbar.value;
+        return searchbar.value.trim();
     }
 
     // RETURN THE SECTION
