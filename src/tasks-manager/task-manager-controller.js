@@ -10,6 +10,8 @@ const TaskManagerController = (function() {
 
     function init() {
 
+        TaskManager.load();
+
         PubSub.subscribe('LIST_BEING_CREATED', (data) => {
             TaskManager.createList(data.listName);
         });

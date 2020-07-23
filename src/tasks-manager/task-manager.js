@@ -8,7 +8,7 @@ const TaskManager = (function() {
     function createList(listName) {
         if (doesListExists(listName)){
             PubSub.publish('LIST_NOT_CREATED', {
-                errorMsg: `The list [${listName}] already exists`
+                errorMsg: `List "${listName}" already exists`
             });
         } else {
             taskLists[listName] = [];
@@ -20,12 +20,12 @@ const TaskManager = (function() {
     function deleteList(listName) {
         
         if (doesListExists(listName)) {
-            delete taskLists[listName];
             localStorage.removeItem(listName);
+            delete taskLists[listName];
             PubSub.publish('LIST_DELETED', {listName});
         } else {
             PubSub.publish('LIST_NOT_DELETED', {
-                errorMsg: `The list ${listName} does not exists`
+                errorMsg: `List "${listName}" does not exists`
             })
         }
     }   
@@ -118,11 +118,16 @@ const TaskManager = (function() {
     }
 
     function load() {
+        let listNames = []
         for (let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i);
-            let tasksInfo = JSON.parse(localStorage.getItem(key));
-            taskLists[key] = tasksInfo.map((task) => newTask(task));
+            let listName = localStorage.key(i);
+            let tasksInfo = JSON.parse(localStorage.getItem(listName));
+            taskLists[listName] = tasksInfo.map((task) => newTask(task));
+
+            listNames.push(listName);
         }
+
+        PubSub.publish('LISTS_LOADED', {listNames});
     }
 
     // TODO: for testing purpouses. Delete later
