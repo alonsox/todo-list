@@ -130,7 +130,7 @@
 } 
 
 .mv_delete-task-icon:hover,
-.mv_todo-add-btn:hover {
+.mv_add-task-btn:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
