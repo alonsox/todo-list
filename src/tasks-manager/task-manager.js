@@ -130,6 +130,24 @@ const TaskManager = (function() {
         PubSub.publish('LISTS_LOADED', {listNames});
     }
 
+    function getListTasks(listName) {
+
+        if (doesListExists(listName)) {
+
+            let tasks = [];
+            taskLists[listName].forEach((task) => {
+                let taskInfo = task.getTaskInfo();
+                taskInfo.Id = task.getId();
+                tasks.push(taskInfo);
+            });
+
+            return tasks;
+
+        } else {
+            return null;
+        }
+    }
+
     // TODO: for testing purpouses. Delete later
     function log() {
         for (listName in taskLists) {
@@ -147,6 +165,7 @@ const TaskManager = (function() {
         createTask,
         editTask,
         deleteTask,
+        getListTasks,
         load
     }
 })();
