@@ -10,7 +10,7 @@
   
 /* The actual popup (appears on top) */
 .inline-popup-text {
-    /* visibility: hidden; */
+    visibility: hidden;
     width: 160px;
     background-color: #555;
     color: #fff;
