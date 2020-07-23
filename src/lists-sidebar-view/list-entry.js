@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import { PubSub } from '../core/pubsub';
 
 function newList(listName, isAllList=false) {
 
@@ -29,7 +30,7 @@ function newList(listName, isAllList=false) {
         }
 
         // ICON-NAME CONTAINER
-        iconNameContainer.classList.add('ls_list-name');
+        iconNameContainer.classList.add('ls_icon-name-container');
         iconNameContainer.appendChild(listIcon);
         iconNameContainer.appendChild(listNameText);
 
@@ -42,26 +43,43 @@ function newList(listName, isAllList=false) {
             deleteIcon.classList.add(
                 'material-icons',
                 'icon-size-small',
-                'ls_delete-list-btn'
+                'ls_delete-list-btn',
+                'is-hidden'
             );
             deleteIcon.textContent = 'clear';
             container.appendChild(deleteIcon);
         }
     }
 
-    function initEvents(isAllList) {
-        // TODO: FIX THIS EVENTS AND ADD A CUSTOM EVENT SYSTEM LIKE A PUBUS
-        // INITIALIZE EVENTS
-        if (!isAllList) {
-            deleteIcon.addEventListener('click', () => {
+    function initEvents() {
+        /* Note: Since in the all lists List the delete button is not being 
+         * rendered, the actions affecting the delete button don't give errors
+         * because the delete button is never null and since it is never shown
+         * then nothing happens.
+         */
 
 
-           });
-        }
-
-        iconNameContainer.addEventListener('click', () => {
-
+        $(deleteIcon).on('click', () => {
+            // TODO: PUBLISH LIST_BEING_DELETED
         });
+
+        $(iconNameContainer).on('click', () => {
+            // TODO: PUBLISH LIST_SELECT
+        });
+
+        $(container).on({
+            mouseover: showDeleteIcon,
+            
+            mouseout: hideDeleteIcon, 
+        });
+    }
+
+    function showDeleteIcon() {
+        deleteIcon.classList.remove('is-hidden');
+    }
+
+    function hideDeleteIcon() {
+        deleteIcon.classList.add('is-hidden');
     }
 
     // RETURN THE LIST

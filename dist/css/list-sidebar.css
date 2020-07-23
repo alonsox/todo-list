@@ -63,11 +63,12 @@ input[type="text"].ls_list-searchbar {
     justify-content: space-between;
 }
 
-.ls_list-name {
+.ls_icon-name-container {
     display: flex;
     align-items: center;
     justify-content: left;
 
+    flex: 1;
     margin-left: var(--sidebar-side-padding);
 }
 
@@ -130,5 +131,9 @@ input[type="text"].ls_new-list-searchbar {
     transform: scale(1.1);
 }
 
+.ls_tasks-list:hover {
+    cursor: pointer;
+    background-color: rgba(75, 190, 243, 0.212);
+}
 
 
