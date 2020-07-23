@@ -1,5 +1,6 @@
 import $ from 'jquery';
-import {newList} from './list-entry.js'
+import {newList} from './list-entry';
+import {PubSub} from '../core/pubsub';
 
 
 function createListContainer() {
@@ -8,13 +9,31 @@ function createListContainer() {
 
     function init() {
         createUI();
+        initEvents();
     }
 
     function createUI() {
         // LISTS CONTAINER
         listsContainer.classList.add('ls_lists-container');
         listsContainer.appendChild(newList('All', true));
-        listsContainer.appendChild(newList('My list'));
+    }
+
+    function initEvents() {
+        PubSub.subscribe('LIST_CREATED', (data) => {
+            listsContainer.appendChild(newList(data.listName));
+        });
+
+        PubSub.subscribe('LISTS_LOADED', (data) => {
+            // TODO: IMPLEMENT
+        });
+
+        PubSub.subscribe('LIST_DELETED', (data) => {
+            // TODO: IMPLEMENT
+        });
+
+        PubSub.subscribe('LIST_NOT_DELETED', (data) => {
+            // TODO: IMPLEMENT
+        });
     }
 
     init();

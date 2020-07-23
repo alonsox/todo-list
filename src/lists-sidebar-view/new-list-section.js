@@ -1,6 +1,8 @@
 import $ from 'jquery';
+import {PubSub} from '../core/pubsub';
 
 function createNewListSection() {
+    
     // UI ELEMENTS
     const popupText  = document.createElement('span');
     const inputText  = document.createElement('input');
@@ -38,18 +40,41 @@ function createNewListSection() {
     }
 
     function initEvents() {
-        addListBtn.addEventListener('click', () => {
+        $(addListBtn).on('click', () => {
+            let listName = getListName();
+            if (listName == '') {
+                showPopup('The list name cannot be empty', 3000);
+            } else {
+                PubSub.publish('LIST_BEING_CREATED', {listName});
+            }
+        });
 
-            
+        PubSub.subscribe('LIST_CREATED', (data) => {
+            clearInputText();
+            showPopup(`"${data.listName}" added`, 3000);
+        });
+
+        PubSub.subscribe('LIST_NOT_CREATED', (data) => {
+            showPopup(`${data.errorMsg}`);
         });
     }
 
-    function showMessage(msg) {
+    function showPopup(msg, timeout=-1) {
+        hidePopup();
+        popupText.textContent = msg;
+        popupText.classList.add('inline-popup-show');
 
+        if (timeout > 0) {
+            setTimeout(hidePopup, timeout);
+        }
+    }
+
+    function hidePopup() {
+        popupText.classList.remove('inline-popup-show');
     }
 
     function getListName() {
-        return inputText.value;
+        return inputText.value.trim();
     }
 
     function clearInputText() {
