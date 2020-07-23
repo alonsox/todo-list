@@ -20,84 +20,76 @@
 
     <div class="content-l">
         
-        <main class="todos-l">
-            <section class="list-info-l">
+        <main class="main-view-l">
+            <section class="mv_list-info-l">
                 <div>
-                    <h1 class="task-list-name">List Name</h1>
+                    <h1 class="mv_list-name">List Name</h1>
                     <div>
-                        <span class="list-stat">XX Tasks</span>    
-                        <span class="list-stat">XX Done</span>    
-                        <span class="list-stat">XX Pending</span>    
+                        <span class="mv_list-stat">XX Tasks</span>    
+                        <span class="mv_list-stat">XX Done</span>    
+                        <span class="mv_list-stat">XX Pending</span>    
                     </div>
                 </div>
                 <div>
-                    <i class="material-icons icon-size-normal todo-add-btn">add</i>
+                    <i class="material-icons icon-size-normal mv_add-task-btn">add</i>
                 </div>
             </section>
 
             <div class="todos-container">
-                <div class="list-title">Shores</div>
+                <div class="mv_list-title">Shores</div>
                 
-                <div class="todo-item-wrapper">
-                    <div class="priority-indicator high-priority"></div>
-
-                    <div class="todo-item todo-item-active">
-                        <div class="checkbox-taskinfo-wraper">
-                            <div class="checkbox-wrapper">
-                                <i class="material-icons todo-check">check_box_outline_blank</i>   
+                <div class="mv_task-wrapper">
+                    <div class="mv_priority-indicator mv_high-priority"></div>
+                    <div class="mv_task_entry mv_task_entry-active">
+                        <div class="mv_checkbox-taskinfo-wraper">
+                            <div class="mv_checkbox-wrapper">
+                                <i class="material-icons mv_task-check">check_box_outline_blank</i>   
                             </div>
-                            <div class="todo-info">
-                                <h3 class="todo-name">Clean house</h3>
-                                <p class="todo-due-date">Due date: 2020/02/12</p>
+                            <div class="mv_task-info">
+                                <h3 class="mv_task-name">Clean house</h3>
+                                <p class="mv_task-due-date">Due date: 2020/02/12</p>
                             </div>
                         </div>
-                        <i class="material-icons delete-task-icon">delete</i>  
+                        <i class="material-icons mv_delete-task-icon">delete</i>  
                     </div>
                 </div>
 
-                <div class="todo-item-wrapper">
-                    <div class="priority-indicator medium-priority"></div>
-
-                    <div class="todo-item">
-                        <div class="checkbox-taskinfo-wraper">
-                            <div class="checkbox-wrapper">
-                                <i class="material-icons todo-check">check_box_outline_blank</i>   
+                <div class="mv_task-wrapper">
+                    <div class="mv_priority-indicator mv_medium-priority"></div>
+                    <div class="mv_task_entry">
+                        <div class="mv_checkbox-taskinfo-wraper">
+                            <div class="mv_checkbox-wrapper">
+                                <i class="material-icons mv_task-check">check_box_outline_blank</i>   
                             </div>
-                            <div class="todo-info">
-                                <h3 class="todo-name">Clean house</h3>
-                                <p class="todo-due-date">Due date: 2020/02/12</p>
+                            <div class="mv_task-info">
+                                <h3 class="mv_task-name">Clean house</h3>
+                                <p class="mv_task-due-date">Due date: 2020/02/12</p>
                             </div>
                         </div>
-                        <i class="material-icons delete-task-icon">delete</i>  
+                        <i class="material-icons mv_delete-task-icon">delete</i>  
                     </div>
-    
                 </div>
 
 
-                <div class="list-title">Homework</div>
+                <div class="mv_list-title">Homework</div>
 
                 <!-- TODO: DO NOT CROSS THE DELETE BUTTON WHEN MARKING AS DONE -->
-                <div class="todo-item-wrapper todo-item-done">
-                    <div class="priority-indicator low-priority"></div>
 
-                    <div class="todo-item">
-                        <div class="checkbox-taskinfo-wraper">
-                            <div class="checkbox-wrapper">
-                                <i class="material-icons todo-check">check_box</i>   
+                <div class="mv_task-wrapper mv_task-wrapper-done">
+                    <div class="mv_priority-indicator mv_low-priority"></div>
+                    <div class="mv_task_entry">
+                        <div class="mv_checkbox-taskinfo-wraper">
+                            <div class="mv_checkbox-wrapper">
+                                <i class="material-icons mv_task-check">check_box</i>   
                             </div>
-                            
-                            <div class="todo-info">
-                                <h3 class="todo-name">Physics</h3>
-                                <p class="todo-due-date">Due date: 2020/02/12</p>
+                            <div class="mv_task-info">
+                                <h3 class="mv_task-name">Clean house</h3>
+                                <p class="mv_task-due-date">Due date: 2020/02/12</p>
                             </div>
-
                         </div>
-
-                        <i class="material-icons delete-task-icon">delete</i>  
+                        <i class="material-icons mv_delete-task-icon">delete</i>  
                     </div>
-                </div>              
-
-
+                </div>     
             </div>
         </main>
         

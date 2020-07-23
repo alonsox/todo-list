@@ -1,5 +1,13 @@
+/* All the classes in this file will use the prefix 'mv_', which stands for 
+ * 'main view', to identify the class as belonging to this file. The only 
+ * exception is the 'main-view-l' class. 
+ */
 
-.todos-l {
+
+/**************
+    LAYOUTS 
+***************/
+.main-view-l {
     width: var(--todos-width);
     
     display: flex;
@@ -11,7 +19,7 @@
     
 }
 
-.list-info-l {
+.mv_list-info-l {
     background-color: #64ac40;
     display: flex;
     flex-direction: row;
@@ -29,21 +37,21 @@
 /**************
     MODELS 
 ***************/
-.task-list-name {
+.mv_list-name {
     color: white;
     font-weight: 580;
 
     padding-bottom: 0.3rem;
 }
 
-.list-stat {
+.mv_list-stat {
     color: white;
     font-size: var(--font-small);
 
     padding-right: 0.5rem;
 }
 
-.todo-add-btn {
+.mv_add-task-btn {
     background-color: rgba(0, 0, 0, 0.219);
     color: white;
     padding: 0.2rem 0.5rem;
@@ -53,24 +61,25 @@
 
 
 /* TO-DO ITEMS*/
-.todo-item-wrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-}
-
-.priority-indicator {
-    width: 8px;
-}
-
-.list-title {
+.mv_list-title {
     background-color: #ebebeb;
     padding: 0.3rem 1rem;
 
     box-shadow: 0px 3px 4px -4px #949494;
 }
 
-.todo-item {
+.mv_task-wrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+
+.mv_priority-indicator {
+    width: 8px;
+}
+
+
+.mv_task_entry {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -81,28 +90,28 @@
     box-shadow: 0px 3px 4px -4px #949494;
 }
 
-.checkbox-taskinfo-wraper {
+.mv_checkbox-taskinfo-wraper {
     display: flex;
     flex-direction: row;
     align-items: center;
     flex: 1;
 }
 
-.delete-task-icon {
+.mv_delete-task-icon {
     color: rgb(240, 47, 13);
 }
 
-.todo-check {
+.mv_task-check {
     color: dodgerblue;
     padding-right: 1rem ;
 }
 
-.todo-name {
+.mv_task-name {
     padding-bottom: 0.2rem;
     font-weight: 500;
 }
 
-.todo-due-date {
+.mv_task-due-date {
     color: gray;
     font-size: var(--font-small);
 }
@@ -112,33 +121,33 @@
 /**************
     STATES 
 ***************/
-.todo-check:hover {
+.mv_task-check:hover {
     cursor: pointer;
 }
 
-.todo-item-active {
+.mv_task_entry-active {
     background-color: #4bbef336;
 } 
 
-.delete-task-icon:hover,
-.todo-add-btn:hover {
+.mv_delete-task-icon:hover,
+.mv_todo-add-btn:hover {
     cursor: pointer;
     transform: scale(1.1);
 }
 
-.high-priority {
+.mv_high-priority {
     background-color: tomato;
 }
 
-.medium-priority {
+.mv_medium-priority {
     background-color: #ffe600;
 }
 
-.low-priority {
+.mv_low-priority {
     background-color: green;
 }
 
-.todo-item-done {
+.mv_task-wrapper-done {
     opacity: 0.5;
     text-decoration: line-through;
 }
