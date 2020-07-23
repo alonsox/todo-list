@@ -1,5 +1,5 @@
-import {newTask} from './task.js'
-import {PubSub} from './pubsub.js'
+import {newTask} from './task.js';
+import {PubSub} from '../core/pubsub.js';
 
 const TaskManager = (function() {
     

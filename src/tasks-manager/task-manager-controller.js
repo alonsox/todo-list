@@ -1,5 +1,5 @@
-import {TaskManager} from './task_manager.js'
-import {PubSub} from './pubsub.js'
+import {TaskManager} from './task_manager.js';
+import {PubSub} from '../core/pubsub.js';
 
 /**
  * An object that handles the task manager with the corresponding events. It 
