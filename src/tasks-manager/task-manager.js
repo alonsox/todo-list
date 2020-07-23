@@ -10,6 +10,10 @@ const TaskManager = (function() {
             PubSub.publish('LIST_NOT_CREATED', {
                 errorMsg: `List "${listName}" already exists`
             });
+        } else if (listName.trim() == '') {
+            PubSub.publish('LIST_NOT_CREATED', {
+                errorMsg: "The list's name cannot be empty"
+            });
         } else {
             taskLists[listName] = [];
             saveList(listName);
