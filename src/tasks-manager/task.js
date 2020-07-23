@@ -1,13 +1,6 @@
 /**
  * Creates a new task.
  * 
- * The taskInfo object must have the following properties:
- * // TODO: update the description
- *  + subject
- *  + priority
- *  + dueDate
- *  + notes
- * 
  * @param {object} taskInfo The info of the task.
  */
 function newTask(taskInfo) {
@@ -32,16 +25,12 @@ function newTask(taskInfo) {
         return _id;
     }
 
-    // TODO: RENAME TO getInfo
     function getTaskInfo() {
         return taskData;
     }
 
     function update(info) {
-        taskData.subject  = info.subject;
-        taskData.priority = info.priority;
-        taskData.dueDate  = info.dueDate;
-        taskData.notes    = info.notes;
+        taskData = info;
     }
 
     init(taskInfo);
@@ -51,6 +40,5 @@ function newTask(taskInfo) {
         update
     }
 }
-
 
 export {newTask}

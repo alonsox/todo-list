@@ -29,7 +29,23 @@ const TaskManagerController = (function() {
         });
 
         PubSub.subscribe('TASK_BEING_EDITED', (data) => {
-            TaskManager.updateTask(data.listName, data.taskId, data.taskInfo);
+            TaskManager.editTask(data.listName, data.taskId, data.taskInfo);
+        });
+
+        PubSub.subscribe('LIST_SELECTED', (data) => {
+            
+            let tasks = TaskManager.getListTasks();
+
+            if (tasks != null) {
+                PubSub.publish('LIST_SELECTED_SUCCESS', {
+                    listName,
+                    tasks,
+                });
+            } else {
+                PubSub.publish('LIST_SELECTED_FAILED', {
+                    errorMsg: `The list "${listName}" does not exist`
+                });
+            }
         });
     }
 
