@@ -35,30 +35,28 @@ const TaskManager = (function() {
     }   
 
     /**
-     * Creates a new task in a specific task list. If the list does not exist 
-     * it is created.
+     * Creates a new task in a specific task list. 
      * 
      * @param {string} listName The name of the list.
      * @param {object} taskInfo The info the task.
      */
     function createTask(listName, taskInfo) {
         
-        if ( !doesListExists(listName) ) {
-            createList(listName);
+        if ( doesListExists(listName) ) {
+            let task = newTask(taskInfo);
+            taskLists[listName].push(task);
+            saveList(listName);
+
+            PubSub.publish('TASK_CREATED', {
+                listName, 
+                taskInfo, 
+                taskId: task.getId()
+            });
+        } else {
+            PubSub.publish('TASK_NOT_CREATED', {
+                errorMsg: `The list "${listName}" does not exist`
+            });
         }
-
-        let task = newTask(taskInfo);
-        taskLists[listName].push();
-
-        // SAVE CHANGES
-        saveList(listName);
-
-        // NOTIFY CHANGES
-        PubSub.publish('TASK_CREATED', {
-            listName, 
-            taskInfo, 
-            taskId: task.getId()
-        });
     }
 
     function deleteTask(listName, taskId) {
@@ -68,35 +66,33 @@ const TaskManager = (function() {
         
         // DELETE TASK
         if (taskPosition < 0) {
-            return;
+            PubSub.publish('TASK_NOT_DELETED', {
+                errorMsg: `Either the list "${listName}" or the task with ID=
+                ${taskId} does not exist`
+            });
         } else {
             taskLists[listName].splice(taskPosition, 1);
+            saveList(listName);
+            PubSub.publish('TASK_DELETED', {listName, taskId});
         }
-
-        // SAVE CHANGES
-        saveList(listName);
-
-        // NOTIFY CHANGES
-        PubSub.publish('TASK_DELETED', {listName, taskId});
     }
 
-    function updateTask(listName, taskId, newTaskInfo) {
+    function editTask(listName, taskId, newTaskInfo) {
 
         // FIND TASK
         const taskPosition = findTaskIndexById(listName, taskId);
 
         // UPDATE TASK
         if (taskPosition < 0) {
-            return;
+            PubSub.publish('TASK_NOT_EDITED', {
+                errorMsg: `Either the list "${listName}" or the task with ID=
+                ${taskId} does not exist`
+            });
         } else {
             taskLists[listName][taskPosition].update(newTaskInfo);
+            saveList(listName);
+            PubSub.publish('TASK_EDITED', {listName, taskId, taskInfo});
         }
-
-        // SAVE CHANGES
-        saveList(listName);
-
-        // NOTIFY CHANGES
-        PubSub.publish('TASK_EDITED', {listName, taskId, taskInfo});
     }
 
     function findTaskIndexById(listName, taskId) {
@@ -149,7 +145,7 @@ const TaskManager = (function() {
         createList,
         deleteList,
         createTask,
-        updateTask,
+        editTask,
         deleteTask,
         load
     }
