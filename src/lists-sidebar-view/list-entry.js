@@ -66,7 +66,9 @@ function newList(listName, isAllList=false) {
         });
 
         $(iconNameContainer).on('click', () => {
-            // TODO: PUBLISH LIST_SELECT
+            PubSub.publish('LIST_SELECTED', {
+                listName: listNameText.textContent.trim()
+            });
         });
 
         $(container).on({
