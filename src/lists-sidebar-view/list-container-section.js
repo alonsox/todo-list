@@ -24,7 +24,9 @@ function createListContainer() {
         });
 
         PubSub.subscribe('LISTS_LOADED', (data) => {
-            // TODO: IMPLEMENT
+            data.listNames.forEach(name => {
+                listsContainer.appendChild(newList(name));
+            });
         });
 
         PubSub.subscribe('LIST_DELETED', (data) => {
