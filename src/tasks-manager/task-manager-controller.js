@@ -1,4 +1,4 @@
-import {TaskManager} from './task_manager.js';
+import {TaskManager} from './task-manager.js';
 import {PubSub} from '../core/pubsub.js';
 
 /**
@@ -35,3 +35,5 @@ const TaskManagerController = (function() {
         init
     }
 })();
+
+export {TaskManagerController}

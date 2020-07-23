@@ -6,28 +6,28 @@ const TaskManager = (function() {
     let taskLists = {};
 
     function createList(listName) {
-        if ( !doesListExists(listName) ) {
+        if (doesListExists(listName)){
+            PubSub.publish('LIST_NOT_CREATED', {
+                errorMsg: `The list [${listName}] already exists`
+            });
+        } else {
             taskLists[listName] = [];
-        }
-
-        // SAVE CHANGES
-        saveList(listName);
-
-        // NOTIFY CHANGES
-        PubSub.publish('LIST_CREATED', {listName});
+            saveList(listName);
+            PubSub.publish('LIST_CREATED', {listName});
+        } 
     }
 
     function deleteList(listName) {
         
         if (doesListExists(listName)) {
             delete taskLists[listName];
+            localStorage.removeItem(listName);
+            PubSub.publish('LIST_DELETED', {listName});
+        } else {
+            PubSub.publish('LIST_NOT_DELETED', {
+                errorMsg: `The list ${listName} does not exists`
+            })
         }
-
-        // REMOVE FROM STORAGE
-        localStorage.removeItem(listName);
-
-        // NOTIFY CHANGES
-        PubSub.publish('LIST_DELETED', {listName});
     }   
 
     /**
