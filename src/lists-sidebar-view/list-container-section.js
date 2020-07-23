@@ -38,13 +38,29 @@ function createListContainer() {
             alert(`List could not be deleted. Error: ${data.errorMsg}`);
         });
 
+        // MARK SELECTED LIST
+        PubSub.subscribe('LIST_SELECTED', (data) => {
+            // Select all lists
+            let allLists = listsContainer.querySelectorAll(`[data-list-name]`);
+
+            // Mark the selected list 
+            allLists.forEach((list) => {  
+                let listName = list.getAttribute('data-list-name');
+                if (listName == data.listName) {
+                    list.classList.add('ls_task-list-active');
+                } else {
+                    list.classList.remove('ls_task-list-active');
+                }
+            });
+        });
+
+
         PubSub.subscribe('LIST_BEING_SEARCHED', (data) => {
-            
             /* Select all lists */
-            let toHide = listsContainer.querySelectorAll(`[data-list-name]`);
+            let allLists = listsContainer.querySelectorAll(`[data-list-name]`);
 
             /* Show only the lists that have 'data.text' in its name */
-            toHide.forEach((list) => {  
+            allLists.forEach((list) => {  
                 let listName = list.getAttribute('data-list-name');
                 if (listName.toLowerCase() == 'all') {
                     // DO NOTHING
@@ -53,7 +69,7 @@ function createListContainer() {
                 } else {
                     list.classList.add('is-hidden');
                 }
-            })
+            });
         });
     }
 

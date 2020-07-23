@@ -133,7 +133,7 @@ input[type="text"].ls_new-list-searchbar {
 
 .ls_tasks-list:hover {
     cursor: pointer;
-    background-color: rgba(75, 190, 243, 0.212);
+    background-color: #e0dedf;
 }
 
 
