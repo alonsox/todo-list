@@ -1,7 +1,6 @@
 import $ from 'jquery';
 
-
-function newListInfoPanel() {
+const ListInfoPanel = (function() {
 
     const listNameIndicator   = document.createElement('h1');
     const allTasksCounter     = document.createElement('span');
@@ -64,6 +63,6 @@ function newListInfoPanel() {
 
     init();
     return panelContainer;
-}
+})();
 
-export {newListInfoPanel}
+export {ListInfoPanel}

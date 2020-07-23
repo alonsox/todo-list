@@ -1,58 +1,14 @@
 import $ from 'jquery';
-import {newListInfoPanel} from './list-info-panel';
-
-
-function newTask() {
-
-    function init() {
-
-    }
-
-    function createUI() {
-        
-    }
-
-    function initEvents() {
-
-    }
-
-}
-
-function newTasksContainer() {
-
-    const tasksContainer = document.createElement('div');
-
-
-    function init() {
-
-    }
-
-    function createUI() {
-
-        tasksContainer.classList.add('mv_tasks-container');
-    }
-
-    function initEvents() {
-
-    }
-
-
-    init();
-    return tasksContainer;
-}
-
-
-
+import {ListInfoPanel} from './list-info-panel';
+import {TasksListsContainer} from './task-lists-container';
 
 const MainView = (function() {
 
-    const listInfoPanel  = newListInfoPanel();
-    const tasksContainer = newTasksContainer();
     const mainContainer  = document.createElement('main');
 
     function init() {
-        mainContainer.appendChild(listInfoPanel);
-        mainContainer.appendChild(tasksContainer);
+        mainContainer.appendChild(ListInfoPanel);
+        mainContainer.appendChild(TasksListsContainer);
         mainContainer.classList.add('main-view-l');
     }
 
