@@ -40,10 +40,12 @@ function createNewListSection() {
     }
 
     function initEvents() {
-        $(addListBtn).on('click', () => {
-            PubSub.publish('LIST_BEING_CREATED', {
-                listName: getListName()
-            });
+        $(addListBtn).on('click', notifyListCreation);
+
+        $(inputText).on('keypress', (e) => {
+            if (e.which == 13) {
+                notifyListCreation();
+            }
         });
 
         PubSub.subscribe('LIST_CREATED', (data) => {
@@ -53,6 +55,12 @@ function createNewListSection() {
 
         PubSub.subscribe('LIST_NOT_CREATED', (data) => {
             showPopup(`${data.errorMsg}`);
+        });
+    }
+
+    function notifyListCreation() {
+        PubSub.publish('LIST_BEING_CREATED', {
+            listName: getListName()
         });
     }
 
