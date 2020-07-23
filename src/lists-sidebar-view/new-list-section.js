@@ -41,12 +41,9 @@ function createNewListSection() {
 
     function initEvents() {
         $(addListBtn).on('click', () => {
-            let listName = getListName();
-            if (listName == '') {
-                showPopup('The list name cannot be empty', 3000);
-            } else {
-                PubSub.publish('LIST_BEING_CREATED', {listName});
-            }
+            PubSub.publish('LIST_BEING_CREATED', {
+                listName: getListName()
+            });
         });
 
         PubSub.subscribe('LIST_CREATED', (data) => {
