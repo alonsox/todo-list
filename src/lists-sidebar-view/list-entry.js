@@ -36,6 +36,7 @@ function newList(listName, isAllList=false) {
 
         // LIST CONTAINER
         container.classList.add('ls_tasks-list');
+        container.setAttribute('data-list-name', listName);
         container.appendChild(iconNameContainer);
 
         // DELETE ICON 
@@ -58,9 +59,10 @@ function newList(listName, isAllList=false) {
          * then nothing happens.
          */
 
-
-        $(deleteIcon).on('click', () => {
-            // TODO: PUBLISH LIST_BEING_DELETED
+         $(deleteIcon).on('click', () => {
+            PubSub.publish('LIST_BEING_DELETED', {
+                listName: listNameText.textContent.trim()
+            });
         });
 
         $(iconNameContainer).on('click', () => {
@@ -69,7 +71,7 @@ function newList(listName, isAllList=false) {
 
         $(container).on({
             mouseover: showDeleteIcon,
-            
+
             mouseout: hideDeleteIcon, 
         });
     }

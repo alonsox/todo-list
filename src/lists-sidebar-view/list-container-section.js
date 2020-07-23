@@ -30,11 +30,12 @@ function createListContainer() {
         });
 
         PubSub.subscribe('LIST_DELETED', (data) => {
-            // TODO: IMPLEMENT
+            const aux = listsContainer.querySelector(`[data-list-name="${data.listName}"]`);
+            listsContainer.removeChild(aux);
         });
 
         PubSub.subscribe('LIST_NOT_DELETED', (data) => {
-            // TODO: IMPLEMENT
+            alert(`List could not be deleted. Error: ${data.errorMsg}`);
         });
     }
 
