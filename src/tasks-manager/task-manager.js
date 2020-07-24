@@ -118,16 +118,18 @@ const TaskManager = (function() {
     }
 
     function load() {
-        let listNames = []
+    
+        let infoToSend = {};
         for (let i = 0; i < localStorage.length; i++) {
+
             let listName = localStorage.key(i);
             let tasksInfo = JSON.parse(localStorage.getItem(listName));
             taskLists[listName] = tasksInfo.map((task) => newTask(task));
 
-            listNames.push(listName);
+            infoToSend[listName] = taskLists[listName].map((task) => task.getFullInfo());
         }
 
-        PubSub.publish('LISTS_LOADED', {listNames});
+        PubSub.publish('LISTS_LOADED', infoToSend);
     }
 
     function getListTasks(listName) {
@@ -136,9 +138,7 @@ const TaskManager = (function() {
 
             let tasks = [];
             taskLists[listName].forEach((task) => {
-                let taskInfo = task.getTaskInfo();
-                taskInfo.id = task.getId();
-                tasks.push(taskInfo);
+                tasks.push(task.getFullInfo());
             });
 
             return tasks;

@@ -5,10 +5,6 @@
  */
 function newTask(taskInfo) {
 
-    if ( !('_idCounter' in newTask) ) {
-        newTask._idCounter = 1;
-    }
-
     let _id;
     let taskData = {};
 
@@ -18,6 +14,11 @@ function newTask(taskInfo) {
     }
 
     function getNextId() {
+
+        if ( !('_idCounter' in newTask) ) {
+            newTask._idCounter = 1;
+        }
+
         return newTask._idCounter++;
     }
 
@@ -25,18 +26,27 @@ function newTask(taskInfo) {
         return _id;
     }
 
+    // ONLY INFO
     function getTaskInfo() {
         return taskData;
+    }
+
+    // ID + INFO
+    function getFullInfo() {
+        return Object.assign({}, {_id}, taskData);
     }
 
     function update(info) {
         taskData = info;
     }
 
+
+
     init(taskInfo);
     return {
         getId,
         getTaskInfo,
+        getFullInfo,
         update
     }
 }
