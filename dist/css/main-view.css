@@ -135,15 +135,15 @@
     transform: scale(1.1);
 }
 
-.mv_high-priority {
+.mv_priority-high {
     background-color: tomato;
 }
 
-.mv_medium-priority {
+.mv_priority-medium {
     background-color: #ffe600;
 }
 
-.mv_low-priority {
+.mv_priority-low {
     background-color: green;
 }
 
