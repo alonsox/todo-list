@@ -137,7 +137,7 @@ const TaskManager = (function() {
             let tasks = [];
             taskLists[listName].forEach((task) => {
                 let taskInfo = task.getTaskInfo();
-                taskInfo.Id = task.getId();
+                taskInfo.id = task.getId();
                 tasks.push(taskInfo);
             });
 

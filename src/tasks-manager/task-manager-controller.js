@@ -34,8 +34,8 @@ const TaskManagerController = (function() {
 
         PubSub.subscribe('LIST_SELECTED', (data) => {
             
-            let tasks = TaskManager.getListTasks();
-
+            let tasks = TaskManager.getListTasks(data.listName);
+            
             if (tasks != null) {
                 PubSub.publish('LIST_SELECTED_SUCCESS', {
                     listName: data.listName,
