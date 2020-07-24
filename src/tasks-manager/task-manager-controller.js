@@ -38,12 +38,12 @@ const TaskManagerController = (function() {
 
             if (tasks != null) {
                 PubSub.publish('LIST_SELECTED_SUCCESS', {
-                    listName,
+                    listName: data.listName,
                     tasks,
                 });
             } else {
                 PubSub.publish('LIST_SELECTED_FAILED', {
-                    errorMsg: `The list "${listName}" does not exist`
+                    errorMsg: `The list "${data.listName}" does not exist`
                 });
             }
         });
