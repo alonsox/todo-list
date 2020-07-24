@@ -97,6 +97,10 @@
     flex: 1;
 }
 
+.mv_task-info {
+    flex: 1;
+}
+
 .mv_delete-task-icon {
     color: rgb(240, 47, 13);
 }
@@ -121,6 +125,8 @@
 /**************
     STATES 
 ***************/
+
+.mv_task-info:hover,
 .mv_task-check:hover {
     cursor: pointer;
 }
