@@ -23,10 +23,11 @@ function createListContainer() {
             listsContainer.appendChild(newList(data.listName));
         });
 
-        PubSub.subscribe('LISTS_LOADED', (data) => {
-            data.listNames.forEach(name => {
-                listsContainer.appendChild(newList(name));
-            });
+        PubSub.subscribe('LISTS_LOADED', (lists) => {
+
+            for (let listName in lists) {
+                listsContainer.appendChild(newList(listName));
+            }
         });
 
         PubSub.subscribe('LIST_DELETED', (data) => {
