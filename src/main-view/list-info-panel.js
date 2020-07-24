@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import {PubSub} from '../core/pubsub';
 
 const ListInfoPanel = (function() {
 
@@ -58,6 +59,16 @@ const ListInfoPanel = (function() {
     }
 
     function initEvents() {
+
+        $(newTaskBtn).on('click', () => {
+            console.log('creating new task...');
+        });
+
+        PubSub.subscribe('LIST_SELECTED_SUCCESS', (data) => {
+            console.log('LIP: processing list info');
+            // Count all tasks and check how many are done and undone
+        });
+
 
     }
 

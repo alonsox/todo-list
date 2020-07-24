@@ -1,7 +1,15 @@
 import $ from 'jquery';
+import {PubSub} from '../core/pubsub';
 
-function newTask(taskInfo) {
-    const taskContainer = document.createElement('div');
+function newTask(listName, taskInfo) {
+
+    const taskSubject       = document.createElement('h3');
+    const taskDueDate       = document.createElement('p');
+    const taskInfoContainer = document.createElement('div');
+    const checkBoxIcon      = document.createElement('i');
+    const deleteTaskBtn     = document.createElement('i');
+    const priorityIndicator = document.createElement('div');
+    const taskContainer     = document.createElement('div');
 
     function init() {
         createUI();
@@ -10,23 +18,19 @@ function newTask(taskInfo) {
 
     function createUI() {
         // TASK INFO
-        const taskName = document.createElement('h3');
-        taskName.classList.add('mv_task-name');
-        taskName.textContent = taskInfo.subject;
+        taskSubject.classList.add('mv_task-name');
+        taskSubject.textContent = taskInfo.subject;
 
-        const taskDueDate = document.createElement('p');
         taskDueDate.classList.add('mv_task-due-date');
         taskDueDate.textContent = `Due date: ${taskInfo.dueDate}`;
 
-        const taskInfoContainer = document.createElement('div');
         taskInfoContainer.classList.add('mv_task-info');
-        taskInfoContainer.appendChild(taskName);
+        taskInfoContainer.appendChild(taskSubject);
         taskInfoContainer.appendChild(taskDueDate);
 
         // TASK DONE/UNDONE CHECKBOX
-        const checkBoxIcon = document.createElement('i');
         checkBoxIcon.classList.add('material-icons', 'mv_task-check');
-        checkBoxIcon.textContent = (taskInfo.taskDone) ? 'check_box' : 'check_box_outline_blank';
+        checkBoxIcon.textContent = (taskInfo.done) ? 'check_box' : 'check_box_outline_blank';
 
         const checkboxWrapper = document.createElement('div');
         checkboxWrapper.classList.add('mv_checkbox-wrapper');
@@ -39,7 +43,6 @@ function newTask(taskInfo) {
         checkboxInfoWrapper.appendChild(taskInfoContainer);
         
         // (TASK INFO + CHECKBOX) + DELTE BUTTON
-        const deleteTaskBtn = document.createElement('i');
         deleteTaskBtn.classList.add('material-icons', 'mv_delete-task-icon');
         deleteTaskBtn.textContent = 'delete';
 
@@ -49,38 +52,86 @@ function newTask(taskInfo) {
         taskEntry.appendChild(deleteTaskBtn);
 
         // PRIORITY INDICATOR
-        const priorityIndicator = document.createElement('div');
-        priorityIndicator.classList.add(
-            'mv_priority-indicator',
-            `${getPriorityClass(taskInfo.priority)}`
-        );
+        priorityIndicator.classList.add('mv_priority-indicator');
+        changePriorityIndicator(taskInfo.priority);
 
         // INSERT INTO CONTAINER
         taskContainer.classList.add('mv_task-wrapper');
-        if (taskInfo.taskDone) {
-            taskContainer.classList.add('mv_task-wrapper-done');
-        }
-        taskContainer.setAttribute('data-task-id', `${taskInfo.taskId}`);
+        changeDoneness(taskInfo.done);
+        taskContainer.setAttribute('data-task-id', `${taskInfo.id}`);
         taskContainer.appendChild(priorityIndicator);
         taskContainer.appendChild(taskEntry);
     }
 
-    function getPriorityClass(priority) {
+    function changePriorityIndicator(priority) {
+        // TODO: use regex tom remove indicators
+        priorityIndicator.classList.remove('mv_priority-high');
+        priorityIndicator.classList.remove('mv_priority-medium');
+        priorityIndicator.classList.remove('mv_priority-low');
 
         switch (priority) {
             case 'high':
-               return 'mv_priority-high';
+                priorityIndicator.classList.remove('mv_priority-high');
+                break;
             case 'medium':
-                return 'mv_priority-medium';
+                priorityIndicator.classList.remove('mv_priority-medium');
+                break;
             case 'low': 
-                return 'mv_priority-low';
-            default:
-                return 'mv_priority-low';
+                priorityIndicator.classList.remove('mv_priority-low');
+                break;
        }
     }
 
     function initEvents() {
 
+        $(deleteTaskBtn).on('click', () => {
+            console.log(`deleteing task: S=${taskInfo.subject}, ID=${taskInfo.id}`);
+            // PubSub.publish('TASK_BEING_DELETED', {
+            //     listName,
+            //     taskId: taskInfo.id
+            // });
+        });
+
+        $(checkBoxIcon).on('click', () => {
+            console.log(`toggling doneness: S=${taskInfo.subject}, ID=${taskInfo.id}`);
+
+            // let newInfo = Object.assign({}, taskInfo);
+            // newInfo.done = !taskInfo.done;  // Toogle done/undone
+
+            // PubSub.publish('TASK_BEING_EDITED', {
+            //     listName,
+            //     taskId: taskInfo.id,
+            //     newInfo
+            // });
+        });
+        
+        $(taskInfoContainer).on('click', () => {
+            console.log(`selecting task: S=${taskInfo.subject}, ID=${taskInfo.id}`);
+            // Change color after publishing
+            // PubSub.publish('TASK_SELECTED', {
+            //     listName,
+            //     taskId: taskInfo.id
+            // });
+        });
+
+        PubSub.subscribe('TASK_EDITED', (data) => {
+            if (data.taskInfo.id == taskInfo.id) {
+                console.log(`editing task: S=${taskInfo.subject}, ID=${taskInfo.id}`);
+                // taskInfo = data.taskInfo;
+                // changeDoneness(taskInfo.done);
+                // taskSubject.textContent = taskInfo.subject;
+                // taskDueDate.textContent = taskInfo.dueDate;
+            }
+        });
+    }
+
+    function changeDoneness(done) {
+
+        if (done) {
+            taskContainer.classList.add('mv_task-wrapper-done');
+        } else {
+            taskContainer.classList.remove('mv_task-wrapper-done');
+        }
     }
 
 
