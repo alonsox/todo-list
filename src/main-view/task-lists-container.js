@@ -12,14 +12,13 @@ const TasksListsContainer = (function() {
     }
 
     function createUI() {
-
         tasksContainer.classList.add('mv_tasks-container');
+
     }
 
     function initEvents() {
 
     }
-
 
     init();
     return tasksContainer;
