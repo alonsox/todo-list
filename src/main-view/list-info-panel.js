@@ -42,12 +42,31 @@ const ListInfoPanel = (function() {
     function initEvents() {
 
         $(newTaskBtn).on('click', () => {
-            console.log('creating new task...');
+            let listName = getListName();
+            if (listName.toLowerCase() == 'all') {
+                alert('You need to select a list different from "All"');
+                return;
+            }
+
+            PubSub.publish('TASK_BEING_CREATED', {
+                listName,
+                taskInfo: {
+                    done: false,
+                    subject: 'New task',
+                    notes: '',
+                    dueDate: 'today',
+                    priority: 'low'
+                }
+            });
         });
 
         PubSub.subscribe('LIST_SELECTED', (data) => {
             listNameIndicator.textContent = data.listName;
         });
+    }
+
+    function getListName() {
+        return listNameIndicator.textContent.trim();
     }
 
     init();
