@@ -33,7 +33,7 @@ function newTask(taskInfo) {
 
     // ID + INFO
     function getFullInfo() {
-        return Object.assign({}, {_id}, taskData);
+        return Object.assign({}, {id: _id}, taskData);
     }
 
     function update(info) {
