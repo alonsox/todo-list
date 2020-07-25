@@ -85,11 +85,10 @@ function newTask(listName, taskInfo) {
     function initEvents() {
 
         $(deleteTaskBtn).on('click', () => {
-            console.log(`deleteing task: S=${taskInfo.subject}, ID=${taskInfo.id}`);
-            // PubSub.publish('TASK_BEING_DELETED', {
-            //     listName,
-            //     taskId: taskInfo.id
-            // });
+            PubSub.publish('TASK_BEING_DELETED', {
+                listName,
+                taskId: taskInfo.id
+            });
         });
 
         $(checkBoxIcon).on('click', () => {
