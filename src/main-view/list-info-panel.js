@@ -64,9 +64,8 @@ const ListInfoPanel = (function() {
             console.log('creating new task...');
         });
 
-        PubSub.subscribe('LIST_SELECTED_SUCCESS', (data) => {
-            console.log('LIP: processing list info');
-            // Count all tasks and check how many are done and undone
+        PubSub.subscribe('LIST_SELECTED', (data) => {
+            console.log(`LIP: processing list [${data.listName}]`);
         });
 
 

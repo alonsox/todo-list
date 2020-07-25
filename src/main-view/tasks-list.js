@@ -28,7 +28,7 @@ function newTaskList(listName, tasksList) {
 
     function initEvents() {
 
-        PubSub.subscribe('LIST_SELECTED_SUCCESS', (data) => {
+        PubSub.subscribe('LIST_SELECTED', (data) => {
             if (data.listName == listName) {
                 console.log(`Showing list ${listName}`);
             } else{

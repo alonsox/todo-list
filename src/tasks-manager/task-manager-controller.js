@@ -31,22 +31,6 @@ const TaskManagerController = (function() {
         PubSub.subscribe('TASK_BEING_EDITED', (data) => {
             TaskManager.editTask(data.listName, data.taskId, data.taskInfo);
         });
-
-        PubSub.subscribe('LIST_SELECTED', (data) => {
-            
-            let tasks = TaskManager.getListTasks(data.listName);
-            
-            if (tasks != null) {
-                PubSub.publish('LIST_SELECTED_SUCCESS', {
-                    listName: data.listName,
-                    tasks,
-                });
-            } else {
-                PubSub.publish('LIST_SELECTED_FAILED', {
-                    errorMsg: `The list "${data.listName}" does not exist`
-                });
-            }
-        });
     }
 
     return {
