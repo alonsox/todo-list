@@ -19,60 +19,59 @@
 <body>
 
     <div class="content-l">
-        
-       
-        <aside class="edit-l">
-           <h2 class="edit-title">Edit Task</h2>
+        <sidebar class="edit-l">
+            <h2 class="ev_edit-title">Edit Task</h2>
 
-           <h3 class="no-task is-hidden">No task selected</h3>
+            <h3 class="ev_no-task-active-msg is-hidden">No task selected</h3>
 
-            <div class="task-info-container-l">
-                <div class="todo-title">
-                    <i class="material-icons">title</i> 
-                    <span class="field-text">Task title</span> 
+            <div class="ev_task-info-container-l">
+                <div class="ev_task-title">
+                    <i class="material-icons icon-size-big ev_task-data-icon">title</i> 
+                    <span class="ev_editable-text">Task title</span> 
                 </div>
     
-                <div class="todo-list">
-                    <i class="material-icons">menu</i> 
-                    <span class="field-text">All</span> 
+                <div class="ev_task-list">
+                    <i class="material-icons icon-size-big ev_task-data-icon">menu</i> 
+                    <span class="ev_editable-text">All</span> 
                 </div>
     
-    
-                <div class="todo-date">
-                    <i class="material-icons">event_note</i> 
-                    <span class="field-text">2020/07/07</span> 
-                </div>
-                <div class="todo-priority">
-                    <div class="priority-title">
-                        <i class="material-icons">info_outline</i> 
-                        <span class="text-info">Priority</span> 
+                <div class="ev_task-date">
+                    <i class="material-icons icon-size-big ev_task-data-icon">event_note</i> 
+                    <div>
+                        <span class="ev_date-year">2020</span>/<span class="ev_date-month">07</span>/<span class="ev_date-day">07</span>
                     </div>
-                    <div class="priority-container">
-                        <div class="priority-item">
-                            <i class="material-icons priority-radio-btn">radio_button_unchecked</i>
+                </div>
+                <div class="ev_task-priority">
+                    <div class="ev_priority-title">
+                        <i class="material-icons icon-size-big ev_task-data-icon">info_outline</i> 
+                        <span class="ev_text-info">Priority</span> 
+                    </div>
+                    <div class="ev_priority-container">
+                        <div class="ev_priority-item">
+                            <i class="material-icons icon-size-big ev_priority-radio-btn">radio_button_unchecked</i>
                             <label>Low</label>
                         </div>
-                        <div class="priority-item">
-                            <i class="material-icons priority-radio-btn">radio_button_checked</i>
+                        <div class="ev_priority-item">
+                            <i class="material-icons icon-size-big ev_priority-radio-btn">radio_button_checked</i>
                             <label>Medium</label>
                         </div>
-                        <div class="priority-item">
-                            <i class="material-icons priority-radio-btn">radio_button_unchecked</i>
+                        <div class="ev_priority-item">
+                            <i class="material-icons icon-size-big ev_priority-radio-btn">radio_button_unchecked</i>
                             <label>High</label>
                         </div>
                     </div>
                 </div>
                 
-                <textarea class="todo-notes" placeholder="Add a note..."></textarea>
-    
-                <button class="delete-btn">
-                    <i class="material-icons">delete</i>   
+                <textarea class="ev_task-notes" placeholder="Add a note..."></textarea>
+        
+                <button class="ev_delete-task-btn">
+                    <i class="material-icons icon-size-big ev_delete-task-icon">delete</i>   
                     Delete task
                 </button>
             </div>
 
 
-        </aside>
+        </sidebar>
     </div>
 </body>
 </html>
