@@ -84,6 +84,11 @@ const TaskManager = (function() {
 
     function editTask(listName, taskId, newTaskInfo) {
 
+        // CLEAN ID porperty
+        if ('id' in newTaskInfo) {
+            delete newTaskInfo.id;
+        }
+
         // FIND TASK
         const taskPosition = findTaskIndexById(listName, taskId);
 
