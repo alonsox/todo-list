@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import {newTaskList} from './tasks-list';
 import {PubSub} from '../core/pubsub';
 
@@ -19,9 +20,12 @@ const TasksListsContainer = (function() {
 
     function initEvents() {
 
-        PubSub.subscribe('LISTS_LOADED', (data) => {
-            // TODO: add tasks info in the datas
-            console.log('loading lists in TLC');
+        PubSub.subscribe('LISTS_LOADED', (lists) => {
+            for (var listName in lists) {
+                let taskList = newTaskList(listName, lists[listName]);
+                $(taskList).addClass('is-hidden');
+                tasksContainer.appendChild(taskList);
+            }
         });
 
         PubSub.subscribe('LIST_CREATED', (data) => {
