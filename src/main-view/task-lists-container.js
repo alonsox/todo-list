@@ -35,7 +35,14 @@ const TasksListsContainer = (function() {
         });
 
         PubSub.subscribe('LIST_DELETED', (data) => {
-            console.log('Deleting list in TLC');
+            let allLists = tasksContainer.querySelectorAll('[data-list-name]');
+            allLists.forEach((list) => {
+
+                let listName = list.getAttribute('data-list-name');
+                if (listName == data.listName) {
+                    tasksContainer.removeChild(list);                    
+                }
+            });
         });
     }
 
