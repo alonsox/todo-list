@@ -55,8 +55,7 @@ const TaskManager = (function() {
 
             PubSub.publish('TASK_CREATED', {
                 listName, 
-                taskInfo, 
-                taskId: task.getId()
+                taskInfo: task.getFullInfo()
             });
         } else {
             PubSub.publish('TASK_NOT_CREATED', {
@@ -95,9 +94,13 @@ const TaskManager = (function() {
                 ${taskId} does not exist`
             });
         } else {
-            taskLists[listName][taskPosition].update(newTaskInfo);
+            let task = taskLists[listName][taskPosition];
+            task.update(newTaskInfo);
             saveList(listName);
-            PubSub.publish('TASK_EDITED', {listName, taskId, taskInfo});
+            PubSub.publish('TASK_EDITED', {
+                listName, 
+                taskInfo: task.getFullInfo()
+            });
         }
     }
 
