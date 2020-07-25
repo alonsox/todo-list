@@ -31,7 +31,7 @@ function newTask(listName, taskInfo) {
 
         // TASK DONE/UNDONE CHECKBOX
         checkBoxIcon.classList.add('material-icons', 'mv_task-check');
-        checkBoxIcon.textContent = (taskInfo.done) ? 'check_box' : 'check_box_outline_blank';
+        changeDoneness(taskInfo.done);
 
         const checkboxWrapper = document.createElement('div');
         checkboxWrapper.classList.add('mv_checkbox-wrapper');
@@ -92,16 +92,16 @@ function newTask(listName, taskInfo) {
         });
 
         $(checkBoxIcon).on('click', () => {
-            console.log(`toggling doneness: S=${taskInfo.subject}, ID=${taskInfo.id}`);
+            // PREPARE INFO TO SEND
+            let newTaskInfo = Object.assign({}, taskInfo);
+            newTaskInfo.done = !newTaskInfo.done;  // Toogle done/undone
+            delete newTaskInfo.id;  // New info must go without id
 
-            // let newInfo = Object.assign({}, taskInfo);
-            // newInfo.done = !taskInfo.done;  // Toogle done/undone
-
-            // PubSub.publish('TASK_BEING_EDITED', {
-            //     listName,
-            //     taskId: taskInfo.id,
-            //     newInfo
-            // });
+            PubSub.publish('TASK_BEING_EDITED', {
+                listName,
+                taskId: taskInfo.id,
+                newTaskInfo
+            });
         });
         
         $(taskInfoContainer).on('click', () => {
@@ -111,14 +111,13 @@ function newTask(listName, taskInfo) {
             });
         });
 
-
         PubSub.subscribe('TASK_EDITED', (data) => {
             if (data.taskInfo.id == taskInfo.id) {
-                console.log(`editing task: S=${taskInfo.subject}, ID=${taskInfo.id}`);
-                // taskInfo = data.taskInfo;
-                // changeDoneness(taskInfo.done);
-                // taskSubject.textContent = taskInfo.subject;
-                // taskDueDate.textContent = taskInfo.dueDate;
+                taskInfo = data.taskInfo;
+                changeDoneness(taskInfo.done);
+                changePriorityIndicator(taskInfo.priority);
+                taskSubject.textContent = taskInfo.subject;
+                taskDueDate.textContent = taskInfo.dueDate;
             }
         });
 
@@ -134,9 +133,11 @@ function newTask(listName, taskInfo) {
     function changeDoneness(done) {
 
         if (done) {
-            taskContainer.classList.add('mv_task-wrapper-done');
+            $(taskContainer).addClass('mv_task-wrapper-done');
+            checkBoxIcon.textContent = 'check_box';
         } else {
-            taskContainer.classList.remove('mv_task-wrapper-done');
+            $(taskContainer).removeClass('mv_task-wrapper-done');
+            checkBoxIcon.textContent = 'check_box_outline_blank';
         }
     }
 
