@@ -131,6 +131,7 @@
     cursor: pointer;
 }
 
+.mv_task_entry:hover,
 .mv_task_entry-active {
     background-color: #4bbef336;
 } 
