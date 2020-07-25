@@ -6,13 +6,19 @@ const TaskManager = (function() {
     let taskLists = {};
 
     function createList(listName) {
+
+        listName = listName.trim();
         if (doesListExists(listName)){
             PubSub.publish('LIST_NOT_CREATED', {
                 errorMsg: `List "${listName}" already exists`
             });
-        } else if (listName.trim() == '') {
+        } else if (listName == '') {
             PubSub.publish('LIST_NOT_CREATED', {
                 errorMsg: "The list's name cannot be empty"
+            });
+        } else if (listName.toLowerCase() == 'all') {
+            PubSub.publish('LIST_NOT_CREATED', {
+                errorMsg: 'The name "all", case independent, cannot be used for the name of a list'
             });
         } else {
             taskLists[listName] = [];
@@ -119,17 +125,17 @@ const TaskManager = (function() {
 
     function load() {
     
-        let infoToSend = {};
+        let listsInfo = {};
         for (let i = 0; i < localStorage.length; i++) {
 
             let listName = localStorage.key(i);
             let tasksInfo = JSON.parse(localStorage.getItem(listName));
             taskLists[listName] = tasksInfo.map((task) => newTask(task));
 
-            infoToSend[listName] = taskLists[listName].map((task) => task.getFullInfo());
+            listsInfo[listName] = taskLists[listName].map((task) => task.getFullInfo());
         }
 
-        PubSub.publish('LISTS_LOADED', infoToSend);
+        PubSub.publish('LISTS_LOADED', listsInfo);
     }
 
     function getListTasks(listName) {
