@@ -3,9 +3,9 @@ import {PubSub} from '../core/pubsub';
 
 const ListInfoPanel = (function() {
 
-    const listNameIndicator   = document.createElement('h1');
-    const newTaskBtn          = document.createElement('i');
-    const panelContainer      = document.createElement('section');
+    const listNameIndicator = document.createElement('h1');
+    const newTaskBtn        = document.createElement('i');
+    const panelContainer    = document.createElement('section');
 
     function init() {
         createUI();
@@ -46,10 +46,8 @@ const ListInfoPanel = (function() {
         });
 
         PubSub.subscribe('LIST_SELECTED', (data) => {
-            console.log(`LIP: processing list [${data.listName}]`);
+            listNameIndicator.textContent = data.listName;
         });
-
-
     }
 
     init();
