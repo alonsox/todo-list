@@ -8,6 +8,7 @@ function newTask(listName, taskInfo) {
     const taskInfoContainer = document.createElement('div');
     const checkBoxIcon      = document.createElement('i');
     const deleteTaskBtn     = document.createElement('i');
+    const taskEntry         = document.createElement('div');
     const priorityIndicator = document.createElement('div');
     const taskContainer     = document.createElement('div');
 
@@ -46,7 +47,6 @@ function newTask(listName, taskInfo) {
         deleteTaskBtn.classList.add('material-icons', 'mv_delete-task-icon');
         deleteTaskBtn.textContent = 'delete';
 
-        const taskEntry = document.createElement('div');
         taskEntry.classList.add('mv_task_entry');
         taskEntry.appendChild(checkboxInfoWrapper);
         taskEntry.appendChild(deleteTaskBtn);
@@ -71,13 +71,13 @@ function newTask(listName, taskInfo) {
 
         switch (priority) {
             case 'high':
-                priorityIndicator.classList.remove('mv_priority-high');
+                priorityIndicator.classList.add('mv_priority-high');
                 break;
             case 'medium':
-                priorityIndicator.classList.remove('mv_priority-medium');
+                priorityIndicator.classList.add('mv_priority-medium');
                 break;
             case 'low': 
-                priorityIndicator.classList.remove('mv_priority-low');
+                priorityIndicator.classList.add('mv_priority-low');
                 break;
        }
     }
@@ -105,13 +105,12 @@ function newTask(listName, taskInfo) {
         });
         
         $(taskInfoContainer).on('click', () => {
-            console.log(`selecting task: S=${taskInfo.subject}, ID=${taskInfo.id}`);
-            // Change color after publishing
-            // PubSub.publish('TASK_SELECTED', {
-            //     listName,
-            //     taskId: taskInfo.id
-            // });
+            PubSub.publish('TASK_SELECTED', {
+                listName,
+                taskId: taskInfo.id
+            });
         });
+
 
         PubSub.subscribe('TASK_EDITED', (data) => {
             if (data.taskInfo.id == taskInfo.id) {
@@ -120,6 +119,14 @@ function newTask(listName, taskInfo) {
                 // changeDoneness(taskInfo.done);
                 // taskSubject.textContent = taskInfo.subject;
                 // taskDueDate.textContent = taskInfo.dueDate;
+            }
+        });
+
+        PubSub.subscribe('TASK_SELECTED_SUCCESS', (data) => {
+            if (data.taskInfo.id == taskInfo.id) {
+                $(taskEntry).addClass('mv_task_entry-active');
+            } else {
+                $(taskEntry).removeClass('mv_task_entry-active');
             }
         });
     }
