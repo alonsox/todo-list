@@ -1,3 +1,4 @@
+import $ from 'jquery';
 import {newTask} from './task';
 import {PubSub} from '../core/pubsub';
 
@@ -29,10 +30,16 @@ function newTaskList(listName, tasksList) {
     function initEvents() {
 
         PubSub.subscribe('LIST_SELECTED', (data) => {
-            if (data.listName == listName) {
-                console.log(`Showing list ${listName}`);
+
+            if (data.listName.toLowerCase() == 'all') {
+                showName();
+                showList();
+            } else if (data.listName == listName) {
+                hideName();
+                showList();
             } else{
-                console.log(`Hiding list ${listName}`);
+                hideName();
+                hideList();
             }
         });
 
@@ -47,9 +54,25 @@ function newTaskList(listName, tasksList) {
         PubSub.subscribe('TASK_DELETED', (data) => {
 
             if (data.listName == listName) {
-                console.log(`deleting task in ${listName}`);
+
             }
         });
+    }
+
+    function showName() {
+        $(listNameIndicator).removeClass('is-hidden');
+    }
+
+    function hideName() {
+        $(listNameIndicator).addClass('is-hidden');
+    }
+
+    function showList() {
+        $(tasksContainer).removeClass('is-hidden');
+    }
+
+    function hideList() {
+        $(tasksContainer).addClass('is-hidden');
     }
 
     init();
