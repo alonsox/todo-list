@@ -141,6 +141,16 @@ const TaskManager = (function() {
         PubSub.publish('LISTS_LOADED', listsInfo);
     }
 
+    function getTaskInfo(listName, taskId) {
+
+        const taskPosition = findTaskIndexById(listName, taskId);
+        if (taskPosition < 0) {
+            return null;
+        } else {
+            return taskLists[listName][taskPosition].getFullInfo();
+        }
+    }
+
     // TODO: for testing purpouses. Delete later
     function log() {
         for (listName in taskLists) {
@@ -158,6 +168,7 @@ const TaskManager = (function() {
         createTask,
         editTask,
         deleteTask,
+        getTaskInfo,
         load
     }
 })();
