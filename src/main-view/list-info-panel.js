@@ -4,9 +4,6 @@ import {PubSub} from '../core/pubsub';
 const ListInfoPanel = (function() {
 
     const listNameIndicator   = document.createElement('h1');
-    const allTasksCounter     = document.createElement('span');
-    const tasksDoneCounter    = document.createElement('span');
-    const tasksPendingCounter = document.createElement('span');
     const newTaskBtn          = document.createElement('i');
     const panelContainer      = document.createElement('section');
 
@@ -20,20 +17,9 @@ const ListInfoPanel = (function() {
         listNameIndicator.classList.add('mv_list-name');
         listNameIndicator.textContent = 'All';
         
-        // STATS COUNTERS
-        styleStatCounter(allTasksCounter, 'YY Tasks');
-        styleStatCounter(tasksDoneCounter, 'YY Done');
-        styleStatCounter(tasksPendingCounter, 'ZZ Pending');
-
-        const statsContainer = document.createElement('div');
-        statsContainer.appendChild(allTasksCounter);
-        statsContainer.appendChild(tasksDoneCounter);
-        statsContainer.appendChild(tasksPendingCounter);
-        
         // INFORMATION PANEL
         const listInfoPanel = document.createElement('div');
         listInfoPanel.appendChild(listNameIndicator);
-        listInfoPanel.appendChild(statsContainer)
         
         // ADD NEW TASK BUTTON
         newTaskBtn.classList.add(
@@ -51,11 +37,6 @@ const ListInfoPanel = (function() {
         panelContainer.classList.add('mv_list-info-l');
         panelContainer.appendChild(listInfoPanel);
         panelContainer.appendChild(buttonsPanel);        
-    }
-
-    function styleStatCounter(counter, text) {
-        counter.classList.add('mv_list-stat');
-        counter.textContent = text;
     }
 
     function initEvents() {
