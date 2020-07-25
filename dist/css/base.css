@@ -97,6 +97,10 @@ td {
 /**************
     STATES 
 ***************/
+.icon-size-big {
+    font-size: 24px;
+}
+
 .icon-size-normal {
     font-size: 21px;
 }
