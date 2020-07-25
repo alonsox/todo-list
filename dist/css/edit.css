@@ -1,5 +1,11 @@
+/* All the classes in this file will use the prefix 'ev_', which stands for 
+ * 'edit view', to identify the class as belonging to this file. The only 
+ * exception is the 'edit-view-l' class. 
+ */
+
+
 /**************
-    LAYOUTS
+    LAYOUTS 
 ***************/
 .edit-l {
     width: var(--details-width);
@@ -9,7 +15,7 @@
     flex-direction: column;
 }
 
-.task-info-container-l {
+.ev_task-info-container-l {
     width: 100%;
 
     display: flex;
@@ -20,8 +26,16 @@
 /**************
     MODELS
 ***************/
+/* NO TASK SELECTED MESSAGE*/
+.ev_no-task-active-msg {
+    text-align: center;
+    padding: 1.5rem 0;
+    font-weight: normal;
+    color: #535353;
+}
+
 /* SECTION TITLE*/
-.edit-title {
+.ev_edit-title {
     font-weight: 500;
     padding: 1rem 0;
     text-align: center;
@@ -30,44 +44,53 @@
 }
 
 /* GENERAL */
-.todo-title,
-.todo-list,
-.todo-date{
+.ev_task-title,
+.ev_task-list,
+.ev_task-date{
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-.todo-title,
-.todo-list,
-.todo-date,
-.todo-priority  {
+.ev_task-title,
+.ev_task-list,
+.ev_task-date,
+.ev_task-priority  {
     padding: 0.8rem 1.2rem;
     box-shadow: 0px 3px 4px -4px #949494;
 }
 
-.field-text,
-.text-info {
+.ev_editable-text,
+.ev_text-info {
     padding: 0.3rem;
-    margin-left: 0.5rem;
     flex: 1;
+}
+
+.ev_date-year,
+.ev_date-month,
+.ev_date-day {
+    padding: 0.3rem 0.1rem;
+}
+
+/* This must go after the '.ev_data-*' above in 
+ * order to overide the date year */
+.ev_date-year {
+    padding-left: 0.3rem;
+}
+
+.ev_task-data-icon {
+    margin-right: 0.5rem;
 }
 
 /* PRIORITY */
-.priority-title {
+.ev_priority-title {
     display: flex;
     align-items: center;
     width: 100%;
-    padding-bottom: 0.5rem;
+    padding-bottom: 1rem;
 }
 
-.text-info {
-    padding: 0.3rem;
-    margin-left: 0.5rem;
-    flex: 1;
-}
-
-.priority-container {
+.ev_priority-container {
     width: fit-content;
     margin: auto;
     display: flex;
@@ -76,20 +99,20 @@
     align-items: center;
 }
 
-.priority-item {
+.ev_priority-item {
     display: flex;
     flex-direction: row;
     justify-content: left;
     align-items: center;
 }
 
-.priority-radio-btn {
+.ev_priority-radio-btn {
     margin-right: 0.5rem;
     margin-left: 1rem;
 }
 
 /* NOTES TEXTAREA */
-.todo-notes {
+.ev_task-notes {
     flex-grow: 2;
     outline: none;
     border: none;
@@ -102,43 +125,47 @@
 }
 
 /* DELETE TASK BUTTON */
-.delete-btn {
+.ev_delete-task-btn {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     
-    /* color: red; */
     color: #d62222;
     font-weight: 500;
     padding: 0.7rem 0;
+
+    background-color: #e0dfdf;
 }
 
-
-/* NO TASK */
-.no-task {
-    text-align: center;
-    padding: 1.5rem 0;
-    font-weight: normal;
-    color: #535353;
+.ev_delete-task-icon {
+    margin: 0 0.5rem;
+    
 }
+
 
 /**************
     STATES
 ***************/
-.field-text:hover {
+.ev_date-year:hover,
+.ev_date-month:hover,
+.ev_date-day:hover,
+.ev_editable-text:hover {
     cursor: pointer;
 }
 
-.field-text:focus {
+.ev_date-year:focus,
+.ev_date-month:focus,
+.ev_date-day:focus,
+.ev_editable-text:focus {
     outline: dodgerblue solid 2px;
 }
 
-.priority-item:hover {
+.ev_priority-radio-btn:hover {
     cursor: pointer;
 }
 
-.delete-btn:hover {
+.ev_delete-task-btn:hover {
     background-color: #dadada;
     cursor: pointer;
 }
