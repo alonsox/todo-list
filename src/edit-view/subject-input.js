@@ -47,9 +47,8 @@ const SubjectInput = (function() {
         });
 
         PubSub.subscribe('TASK_EDITED', (data) => {
-            if (    data.listName == currentListName 
-                &&  data.taskInfo.id == currentTaskInfo.id) {
-
+            if (data.taskInfo.id == currentTaskInfo.id) {
+                currentListName = data.listName;
                 currentTaskInfo = data.taskInfo;
                 $(taskSubjectText).text(currentTaskInfo.subject);
             }
