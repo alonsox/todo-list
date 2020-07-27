@@ -78,12 +78,11 @@ const SubjectInput = (function() {
             // PREPARE INFO TO EDIT
             let infoToSend = Object.assign({}, currentTaskInfo);
             infoToSend.subject = subject;
-            
-            // console.log(infoToSend);
+            delete infoToSend.id;
             
             PubSub.publish('TASK_BEING_EDITED', {
                 listName: currentListName,
-                taskId: infoToSend.id,
+                taskId: currentTaskInfo.id,
                 newTaskInfo: infoToSend
             });
         });
