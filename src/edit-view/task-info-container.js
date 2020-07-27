@@ -2,18 +2,16 @@ import $ from 'jquery';
 import { PubSub } from '../core/pubsub';
 import {SubjectInput} from './subject-input';
 import {PriorityInput} from './priority-input';
+import {NotesInput} from './notes-input';
 
 const TaskInfoContainer = (function() {
     // UI ELEMENTS
     const taskListText      = document.createElement('span');
-    const taskNotes         = document.createElement('textarea');
     const deleteBtn         = document.createElement('button');
     const theContainer      = document.createElement('div');
     
     // ADDITIONAL ELEMENTS
     let currentTaskInfo = null;
-    let selectedRadioButton = null;
-
 
     function init() {
         createUI();
@@ -54,11 +52,6 @@ const TaskInfoContainer = (function() {
         $(taskDateContainer).append(taskDateText);
 
 
-        
-        // TASK NOTES
-        $(taskNotes).addClass('ev_task-notes');
-        $(taskNotes).attr('placeholder', 'Add a note...');
-
         // TASK DELETE BUTTON
         const deleBtnIcon = document.createElement('i');
         $(deleBtnIcon).addClass(
@@ -79,10 +72,9 @@ const TaskInfoContainer = (function() {
         $(theContainer).append(taskListContainer);
         $(theContainer).append(taskDateContainer);
         $(theContainer).append(PriorityInput);
-        $(theContainer).append(taskNotes);
+        $(theContainer).append(NotesInput);
         $(theContainer).append(deleteBtn);
     }
-
 
     function initEvents() {
 
