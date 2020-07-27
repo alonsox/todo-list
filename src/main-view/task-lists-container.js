@@ -23,14 +23,14 @@ const TasksListsContainer = (function() {
         PubSub.subscribe('LISTS_LOADED', (lists) => {
             for (var listName in lists) {
                 let taskList = newTaskList(listName, lists[listName]);
-                $(taskList).addClass('is-hidden');
+                // $(taskList).addClass('is-hidden');
                 tasksContainer.appendChild(taskList);
             }
         });
 
         PubSub.subscribe('LIST_CREATED', (data) => {
             let newList = newTaskList(data.listName, []);
-            newList.classList.add('is-hidden');
+            // newList.classList.add('is-hidden');
             tasksContainer.appendChild(newList);
         });
 

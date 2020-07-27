@@ -26,35 +26,41 @@ const EditView = (function() {
         $(editViewContainer).append(TaskInfoContainer);
 
         // SHOW MESSAGE
+        // showEditViewMessage();
         hideEditViewMessage();
-        // hideTaskInfo();
+        hideTaskInfo();
     }
 
     function initEvents() {
 
         PubSub.subscribe('TASK_SELECTED_SUCCESS', () => {
-            // showTaskInfo();
-            // hideEditViewMessage();
+            showTaskInfo();
+            hideEditViewMessage();
+        });
+
+        PubSub.subscribe('TASK_SELECTED_FAILED', (data) => {
+            // Show the no task selected message
         });
 
     }
 
     /// HIDE THE MESSAGE ON TASK SELECTED SUCCESS
     function hideEditViewMessage() {
-        $(editViewMsg).addClass('is-hidden');
+        // $(editViewMsg).addClass('is-hidden');
+        $(editViewMsg).hide();
     }
 
 
     function showEditViewMessage() {
-        $(editViewMsg).removeClass('is-hidden');
+        $(editViewMsg).show();
     }
 
     function hideTaskInfo() {
-        $(TaskInfoContainer).addClass('is-hidden');
+        $(TaskInfoContainer).hide();
     }
 
     function showTaskInfo() {
-        $(TaskInfoContainer).removeClass('is-hidden');
+        $(TaskInfoContainer).show();
     }
 
     function render() {
