@@ -1,10 +1,19 @@
 import $ from 'jquery';
-
+import { PubSub } from '../core/pubsub';
+import {SubjectInput} from './subject-input';
 
 const TaskInfoContainer = (function() {
+    // UI ELEMENTS
+    const taskListText      = document.createElement('span');
+    const radioBtnContainer = document.createElement('div');
+    const taskNotes         = document.createElement('textarea');
+    const deleteBtn         = document.createElement('button');
+    const theContainer      = document.createElement('div');
+    
+    // ADDITIONAL ELEMENTS
+    let currentTaskInfo = null;
+    let selectedRadioButton = null;
 
-    const currentTask  = null;
-    const theContainer = document.createElement('div');
 
     function init() {
         createUI();
@@ -12,24 +21,6 @@ const TaskInfoContainer = (function() {
     }
 
     function createUI() {
-
-        // TASK TITLE
-        const taskTitleIcon = document.createElement('i');
-        $(taskTitleIcon).addClass(
-            'material-icons icon-size-big ev_task-data-icon'
-        );
-        $(taskTitleIcon).text('title');
-
-        const taskTitleText = document.createElement('span');
-        $(taskTitleText).addClass('ev_editable-text');
-        $(taskTitleText).text('Task Title');
-
-        const taskTitleContainer = document.createElement('div');
-        $(taskTitleContainer).addClass('ev_task-title');
-        $(taskTitleContainer).append(taskTitleIcon)
-        $(taskTitleContainer).append(taskTitleText);
-
-
         // TASK LIST
         const taskListIcon = document.createElement('i');
         $(taskListIcon).addClass(
@@ -37,7 +28,6 @@ const TaskInfoContainer = (function() {
         );
         $(taskListIcon).text('menu');
 
-        const taskListText = document.createElement('span');
         $(taskListText).addClass('ev_editable-text');
         $(taskListText).text('All');
         
@@ -82,19 +72,17 @@ const TaskInfoContainer = (function() {
         $(priorityTitle).append(priorityTitleText);
 
         // Radio buttons
-        const radioButtonsContainer  = document.createElement('div');
-        $(radioButtonsContainer).addClass('ev_priority-container');
-        $(radioButtonsContainer).append(createRadioButton('Low'));
-        $(radioButtonsContainer).append(createRadioButton('Medium'));
-        $(radioButtonsContainer).append(createRadioButton('High'));
+        $(radioBtnContainer).addClass('ev_priority-container');
+        $(radioBtnContainer).append(createRadioButton('Low'));
+        $(radioBtnContainer).append(createRadioButton('Medium'));
+        $(radioBtnContainer).append(createRadioButton('High'));
 
         const taskPriorityContainer = document.createElement('div');
         $(taskPriorityContainer).addClass('ev_task-priority');
         $(taskPriorityContainer).append(priorityTitle);
-        $(taskPriorityContainer).append(radioButtonsContainer);
+        $(taskPriorityContainer).append(radioBtnContainer);
 
         // TASK NOTES
-        const taskNotes = document.createElement('textarea');
         $(taskNotes).addClass('ev_task-notes');
         $(taskNotes).attr('placeholder', 'Add a note...');
 
@@ -108,14 +96,13 @@ const TaskInfoContainer = (function() {
         const deleteBtnText = document.createElement('label');
         $(deleteBtnText).text('Delete task');
 
-        const deleteBtn = document.createElement('button');
         $(deleteBtn).addClass('ev_delete-task-btn');
         $(deleteBtn).append(deleBtnIcon);
         $(deleteBtn).append(deleteBtnText);
 
         // ASSEMBLE EVERYTHING
         $(theContainer).addClass('ev_task-info-container-l');
-        $(theContainer).append(taskTitleContainer);
+        $(theContainer).append(SubjectInput);
         $(theContainer).append(taskListContainer);
         $(theContainer).append(taskDateContainer);
         $(theContainer).append(taskPriorityContainer);
@@ -142,11 +129,83 @@ const TaskInfoContainer = (function() {
         return radioButtonContainer;
     }
 
-
     function initEvents() {
 
+        PubSub.subscribe('TASK_SELECTED_SUCCESS', (data) => {
+            currentTaskInfo = data.taskInfo;
+            
+            // LOAD TASK INFO
+            // $(taskTitleText).text(currentTaskInfo.subject);
+        });
+
+        PubSub.subscribe('LISTS_LOADED', (data) => {
+            // Fill the lists in the lists' autocomplete
+        });
+
+        PubSub.subscribe('LIST_CREATED', (data) => {
+            // UPdate the lists autocomplete
+        });
+
+        PubSub.subscribe('LIST_DELETED', (data) => {
+            // UPdate the lists autocomplete
+        });
+
+        PubSub.subscribe('TASK_EDITED', (data) => {
+            // Update the lists autocomplete
+
+
+            // // UPDATE SELECTED BUTTON
+            // if (selectedRadioButton != null){
+            //     // TODO: remove the checking with the if
+            //     $(selectedRadioButton).text('radio_button_unchecked');
+            // }
+            // $(radioBtn).text('radio_button_checked');
+            // selectedRadioButton = radioBtn;
+        });
+
+        PubSub.subscribe('TASK_NOT_EDITED', (data) => {
+            // UPdate the lists autocomplete
+        });
+        
+
+        // PubSub.publish('TASK_BEING_EDITED', {});
+        // PubSub.publish('TASK_BEING_DELETED', {});
+
+        // EVENTS
+
+        // The radio buttons
+        let radioButtons = radioBtnContainer.querySelectorAll('.ev_priority-radio-btn');
+        radioButtons.forEach((button) => {
+            $(button).on('click', (e) => {
+                let radioBtn = e.target;
+
+                // PREPARE INFO TO EDIT
+                let priority   = radioBtn.parentNode.querySelector('label').textContent;
+                let infoToSend = Object.assign({}, currentTaskInfo);
+                infoToSend.priority = priority.toLowerCase();
+
+                // PubSub.publish('TASK_BEING_EDITED', infoToSend);
+            });
+        });
+        
+
+
+        // radioButtonsContainer.querySelectorAll('.ev_priority-radio-btn').forEach()
+        // taskNotes
+        $(deleteBtn).on('click', () => {
+            if (currentTaskInfo != null) {
+                console.log(`Deleting task with ID=${currentTaskInfo.id}`);
+            }
+        });
     }
 
+
+    function editPriority(e) {
+    }
+
+    function getListName() {
+        return 'sd';
+    }
 
     // RETURN THE ELEMENT
     init();
