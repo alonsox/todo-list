@@ -121,8 +121,9 @@ function newEditableNumber(spanClass) {
 const DateInput = (function() {
 
     // const yearText  = document.createElement('span');
+    // const monthText = document.createElement('span');
     const yearText  = newEditableNumber('ev_date-year');
-    const monthText = document.createElement('span');
+    const monthText = newEditableNumber('ev_date-month')
     const dayText   = document.createElement('span');
     const taskDateContainer = document.createElement('div');
 
@@ -144,15 +145,17 @@ const DateInput = (function() {
 
         // YEAR ELEMENT
         // $(yearText).addClass('ev_date-year');
+        // $(monthText).addClass('ev_date-month');
         yearText.setValidationFunction(validateYear);
+        monthText.setValidationFunction(validateMonth);
         // 
-        $(monthText).addClass('ev_date-month');
         $(dayText).addClass('ev_date-day');
 
         const auxContainer = document.createElement('div');
         yearText.appendInto(auxContainer);
         $(auxContainer).append(newDashSpan());
-        $(auxContainer).append(monthText);
+        // $(auxContainer).append(monthText);
+        monthText.appendInto(auxContainer)
         $(auxContainer).append(newDashSpan());
         $(auxContainer).append(dayText);
 
@@ -196,6 +199,21 @@ const DateInput = (function() {
             }
         });
 
+        monthText.onFocusOut(() => {
+            if (monthText.isValidText()) {
+                monthText.disableInput();
+                sendTaskInfo();
+            } else {
+                monthText.showPopup(
+                    'The month is a number between 1 and 12', 
+                    2500
+                );
+                if (!monthText.isActive()) {
+                    monthText.setText(monthText.getLastValue());
+                }
+            }
+        });
+
         // TODO: add a task not edited
     }
 
@@ -213,8 +231,33 @@ const DateInput = (function() {
     }
 
     function getDate() {
-        let year  = yearText.getText();
-        let month = $(monthText).text();
+        function removeLeadingZeros(str) {
+            let start = 0;
+            while (str[start] === '0') {
+                start++;
+            }
+
+            return str.slice(start);
+        }
+
+        function addLeadingZeros(str, maxLength) {
+            str = removeLeadingZeros(str);
+            if (str.length >= maxLength) {
+                return str;
+            } else {
+                let zeros = '';
+                for (let i = 0; i < maxLength - str.length; i++) {
+                    zeros = `0${zeros}`;
+                }
+
+                return `${zeros}${str}`;
+            }
+        }
+
+        // let year  = yearText.getText();
+        let year  = addLeadingZeros(yearText.getText(), 4);
+        // let month = monthText.getText();
+        let month = addLeadingZeros(monthText.getText(), 2);
         let day   = $(dayText).text();
         return `${year}-${month}-${day}`;
     }
@@ -223,10 +266,14 @@ const DateInput = (function() {
         let dateParts = currentTaskInfo.dueDate.split('-');
 
         // $(yearText).text(dateParts[0]);
+        // $(monthText).text(dateParts[1]);
+
         yearText.setText(dateParts[0]);
         yearText.updateLastValue();
 
-        $(monthText).text(dateParts[1]);
+        monthText.setText(dateParts[1]);
+        monthText.updateLastValue();
+
         $(dayText).text(dateParts[2]);
     }
 
@@ -238,6 +285,18 @@ const DateInput = (function() {
             return true;
         }
     }   
+
+    function validateMonth(text) {
+        text = text.trim();
+        if (text == '') {
+            return false;
+        } else if (text < 1 || text > 12) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
 
     init();
     return taskDateContainer;
