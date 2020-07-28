@@ -3,11 +3,11 @@ import { PubSub } from '../core/pubsub';
 import {SubjectInput} from './subject-input';
 import {PriorityInput} from './priority-input';
 import {NotesInput} from './notes-input';
+import {DeleteTaskBtn} from './delete-task-btn';
 
 const TaskInfoContainer = (function() {
     // UI ELEMENTS
     const taskListText      = document.createElement('span');
-    const deleteBtn         = document.createElement('button');
     const theContainer      = document.createElement('div');
     
     // ADDITIONAL ELEMENTS
@@ -51,21 +51,6 @@ const TaskInfoContainer = (function() {
         $(taskDateContainer).append(taskDateIcon);
         $(taskDateContainer).append(taskDateText);
 
-
-        // TASK DELETE BUTTON
-        const deleBtnIcon = document.createElement('i');
-        $(deleBtnIcon).addClass(
-            'material-icons icon-size-big ev_delete-task-icon'
-        );
-        $(deleBtnIcon).text('delete');
-
-        const deleteBtnText = document.createElement('label');
-        $(deleteBtnText).text('Delete task');
-
-        $(deleteBtn).addClass('ev_delete-task-btn');
-        $(deleteBtn).append(deleBtnIcon);
-        $(deleteBtn).append(deleteBtnText);
-
         // ASSEMBLE EVERYTHING
         $(theContainer).addClass('ev_task-info-container-l');
         $(theContainer).append(SubjectInput);
@@ -73,14 +58,12 @@ const TaskInfoContainer = (function() {
         $(theContainer).append(taskDateContainer);
         $(theContainer).append(PriorityInput);
         $(theContainer).append(NotesInput);
-        $(theContainer).append(deleteBtn);
+        $(theContainer).append(DeleteTaskBtn);
     }
 
     function initEvents() {
 
         PubSub.subscribe('TASK_SELECTED_SUCCESS', (data) => {
-            currentTaskInfo = data.taskInfo;
-            
             // LOAD TASK INFO
             // $(taskTitleText).text(currentTaskInfo.subject);
         });
@@ -120,11 +103,6 @@ const TaskInfoContainer = (function() {
 
         // EVENTS
         // taskNotes
-        $(deleteBtn).on('click', () => {
-            if (currentTaskInfo != null) {
-                console.log(`Deleting task with ID=${currentTaskInfo.id}`);
-            }
-        });
     }
 
     // RETURN THE ELEMENT

@@ -8,6 +8,9 @@ const EditView = (function() {
     const editViewMsg       = document.createElement('h3');
     const editViewContainer = document.createElement('aside');
 
+    let activeTaskList;
+    let activeTaskInfo;
+
     function init() {
         createUI();
         initEvents();
@@ -33,13 +36,30 @@ const EditView = (function() {
 
     function initEvents() {
 
-        PubSub.subscribe('TASK_SELECTED_SUCCESS', () => {
+        PubSub.subscribe('TASK_SELECTED_SUCCESS', (data) => {
+            activeTaskList = data.listName;
+            activeTaskInfo = data.taskInfo;
+
             showTaskInfo();
             hideEditViewMessage();
         });
 
         PubSub.subscribe('TASK_SELECTED_FAILED', (data) => {
             // Show the no task selected message
+        });
+        
+        PubSub.subscribe('TASK_DELETED', (data) => {
+            if (data.taskId == activeTaskInfo.id ) {
+                showEditViewMessage();
+                hideTaskInfo();
+            }
+        });
+
+        PubSub.subscribe('LIST_DELETED', (data) => {
+            if (data.listName == activeTaskList ) {
+                showEditViewMessage();
+                hideTaskInfo();
+            }
         });
 
     }
@@ -49,7 +69,6 @@ const EditView = (function() {
         // $(editViewMsg).addClass('is-hidden');
         $(editViewMsg).hide();
     }
-
 
     function showEditViewMessage() {
         $(editViewMsg).show();
