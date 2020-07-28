@@ -117,7 +117,7 @@ function newTask(listName, taskInfo) {
                 changeDoneness(taskInfo.done);
                 changePriorityIndicator(taskInfo.priority);
                 taskSubject.textContent = taskInfo.subject;
-                taskDueDate.textContent = taskInfo.dueDate;
+                taskDueDate.textContent = `Due date: ${taskInfo.dueDate}`;
             }
         });
 
