@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import format from 'date-fns/format';
 import {PubSub} from '../core/pubsub';
 
 const ListInfoPanel = (function() {
@@ -47,14 +48,14 @@ const ListInfoPanel = (function() {
                 alert('You need to select a list different from "All"');
                 return;
             }
-
+            
             PubSub.publish('TASK_BEING_CREATED', {
                 listName,
                 taskInfo: {
                     done: false,
                     subject: 'New task',
                     notes: '',
-                    dueDate: 'today',
+                    dueDate: format(Date.now(), 'yyyy-MM-dd'),
                     priority: 'low'
                 }
             });
