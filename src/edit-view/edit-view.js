@@ -49,6 +49,10 @@ const EditView = (function() {
         });
         
         PubSub.subscribe('TASK_DELETED', (data) => {
+            if (!activeTaskInfo) {
+                return;
+            }
+
             if (data.taskId == activeTaskInfo.id ) {
                 showEditViewMessage();
                 hideTaskInfo();
@@ -56,6 +60,10 @@ const EditView = (function() {
         });
 
         PubSub.subscribe('LIST_DELETED', (data) => {
+            if (!activeTaskList) {
+                return;
+            }
+
             if (data.listName == activeTaskList ) {
                 showEditViewMessage();
                 hideTaskInfo();
