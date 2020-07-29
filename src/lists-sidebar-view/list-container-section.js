@@ -5,6 +5,7 @@ import {PubSub} from '../core/pubsub';
 
 function createListContainer() {
 
+    let selectedList = null;
     const listsContainer = document.createElement('section');
 
     function init() {
@@ -31,8 +32,19 @@ function createListContainer() {
         });
 
         PubSub.subscribe('LIST_DELETED', (data) => {
+            // Find list to delete
             const aux = listsContainer.querySelector(`[data-list-name="${data.listName}"]`);
+            
+            // Get the previous list
+            const prevList = aux.previousElementSibling;
+            
+            // delete current list
             listsContainer.removeChild(aux);
+
+            // Simulate click on the previous list to set it as active (if possible)
+            if (selectedList != null && selectedList.toLowerCase() != 'all') {
+                $(prevList.querySelector('.ls_icon-name-container')).trigger('click');
+            }
         });
 
         PubSub.subscribe('LIST_NOT_DELETED', (data) => {
@@ -53,6 +65,9 @@ function createListContainer() {
                     list.classList.remove('ls_task-list-active');
                 }
             });
+
+            // Update active list
+            selectedList = data.listName;
         });
 
 
