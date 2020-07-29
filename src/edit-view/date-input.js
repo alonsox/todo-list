@@ -2,6 +2,28 @@ import $ from 'jquery';
 import { PubSub } from '../core/pubsub';
 import { newPopupMessage } from '../core/popup';
 
+/** Numbers of days in a regular year, 
+ * 
+ * Regular year => February has 28 days.
+ * 
+ * The key of an element will be a string with the month's number with a 
+ * leading 0 if the month's number is less than 10.
+ */
+const daysInMonth = {}
+daysInMonth["01"] = 31;
+daysInMonth["02"] = 28;
+daysInMonth["03"] = 31;
+daysInMonth["04"] = 30;
+daysInMonth["05"] = 31;
+daysInMonth["06"] = 30;
+daysInMonth["07"] = 31;
+daysInMonth["08"] = 31;
+daysInMonth["09"] = 30;
+daysInMonth["12"] = 31;
+daysInMonth["11"] = 30;
+daysInMonth["12"] = 31;
+
+
 function newEditableNumber(spanClass) {
     const popup      = newPopupMessage();
     const textSpan   = document.createElement('span');
@@ -120,11 +142,9 @@ function newEditableNumber(spanClass) {
 
 const DateInput = (function() {
 
-    // const yearText  = document.createElement('span');
-    // const monthText = document.createElement('span');
     const yearText  = newEditableNumber('ev_date-year');
-    const monthText = newEditableNumber('ev_date-month')
-    const dayText   = document.createElement('span');
+    const monthText = newEditableNumber('ev_date-month');
+    const dayText   = newEditableNumber('ev_date-day');
     const taskDateContainer = document.createElement('div');
 
     let currentListName = null;
@@ -143,21 +163,18 @@ const DateInput = (function() {
         );
         $(taskDateIcon).text('event_note');
 
-        // YEAR ELEMENT
-        // $(yearText).addClass('ev_date-year');
-        // $(monthText).addClass('ev_date-month');
+        // INITIALIZE DATE ELEMENTS
         yearText.setValidationFunction(validateYear);
         monthText.setValidationFunction(validateMonth);
-        // 
-        $(dayText).addClass('ev_date-day');
-
+        dayText.setValidationFunction(validateDay);
+        
+        // PUT IN THE CONTAINER
         const auxContainer = document.createElement('div');
         yearText.appendInto(auxContainer);
         $(auxContainer).append(newDashSpan());
-        // $(auxContainer).append(monthText);
         monthText.appendInto(auxContainer)
         $(auxContainer).append(newDashSpan());
-        $(auxContainer).append(dayText);
+        dayText.appendInto(auxContainer);
 
         // ASSEMBLE EVERYTHING
         $(taskDateContainer).addClass('ev_task-date');
@@ -187,6 +204,8 @@ const DateInput = (function() {
             }
         });
 
+        // TODO: add a task not edited?
+
         yearText.onFocusOut(() => {
             if (yearText.isValidText()) {
                 yearText.disableInput();
@@ -214,7 +233,21 @@ const DateInput = (function() {
             }
         });
 
-        // TODO: add a task not edited
+        dayText.onFocusOut(() => {
+            if (dayText.isValidText()) {
+                dayText.disableInput();
+                sendTaskInfo();
+            } else {
+                // Improve message formating
+                dayText.showPopup(
+                    'The day is not valid', 
+                    2500
+                );
+                if (!dayText.isActive()) {
+                    dayText.setText(dayText.getLastValue());
+                }
+            }
+        });
     }
 
     function sendTaskInfo() {
@@ -230,43 +263,39 @@ const DateInput = (function() {
         });
     }
 
+    function removeLeadingZeros(str) {
+        let start = 0;
+        while (str[start] === '0') {
+            start++;
+        }
+
+        return str.slice(start);
+    }
+
+    function addLeadingZeros(str, maxLength) {
+        str = removeLeadingZeros(str);
+        if (str.length >= maxLength) {
+            return str;
+        } else {
+            let zeros = '';
+            for (let i = 0; i < maxLength - str.length; i++) {
+                zeros = `0${zeros}`;
+            }
+
+            return `${zeros}${str}`;
+        }
+    }
+
     function getDate() {
-        function removeLeadingZeros(str) {
-            let start = 0;
-            while (str[start] === '0') {
-                start++;
-            }
-
-            return str.slice(start);
-        }
-
-        function addLeadingZeros(str, maxLength) {
-            str = removeLeadingZeros(str);
-            if (str.length >= maxLength) {
-                return str;
-            } else {
-                let zeros = '';
-                for (let i = 0; i < maxLength - str.length; i++) {
-                    zeros = `0${zeros}`;
-                }
-
-                return `${zeros}${str}`;
-            }
-        }
-
-        // let year  = yearText.getText();
         let year  = addLeadingZeros(yearText.getText(), 4);
-        // let month = monthText.getText();
         let month = addLeadingZeros(monthText.getText(), 2);
-        let day   = $(dayText).text();
+        let day   = addLeadingZeros(dayText.getText(), 2);
+
         return `${year}-${month}-${day}`;
     }
 
     function displayCurrentDate() {
         let dateParts = currentTaskInfo.dueDate.split('-');
-
-        // $(yearText).text(dateParts[0]);
-        // $(monthText).text(dateParts[1]);
 
         yearText.setText(dateParts[0]);
         yearText.updateLastValue();
@@ -274,7 +303,8 @@ const DateInput = (function() {
         monthText.setText(dateParts[1]);
         monthText.updateLastValue();
 
-        $(dayText).text(dateParts[2]);
+        dayText.setText(dateParts[2]);
+        dayText.updateLastValue();
     }
 
     function validateYear(text) {
@@ -296,6 +326,50 @@ const DateInput = (function() {
             return true;
         }
     }
+
+    function validateDay(text) {
+
+        // todo: DEPENDS ON THE MONTH AND IF IT IS A LEAP YEAR
+        text = removeLeadingZeros(text.trim());
+        if (text == '') {
+            return false;
+        } 
+
+        let year  = removeLeadingZeros(yearText.getText());
+        let month = monthText.getText();
+        console.log({year, month, monthDays: daysInMonth[month]});
+
+        if (text > 0 && text <= daysInMonth[month]) {
+            return true;
+        } else {
+            // Special consideration for February on al leap year 
+            if (isLeapYear(year) && month === '02') {
+                // +1 for the extra day
+                return (text >= 1 && text <= (daysInMonth[month] + 1));
+            } else {
+                return false;
+            }
+        }
+    }
+
+    function isLeapYear(year) {
+        /* Leap years are years divisible by four (like 1984 and 2004). However, 
+        * years divisible by 100 are not leap years (such as 1800 and 1900) unless 
+        * they are divisible by 400 (like 1600 and 2000, which were in fact leap 
+        * years). (Yes, it's all pretty confusing, but not as confusing as having 
+        * July in the middle of the winter, which is what would eventually happen) 
+        */
+
+        if (year % 4 == 0) {
+            if (year % 100 == 0) {
+                return (year % 400 == 0);
+            } else {
+                return true;
+            }  
+        } else {
+            return false;
+        }
+    } 
 
 
     init();
