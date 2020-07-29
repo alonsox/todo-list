@@ -16,21 +16,28 @@
     box-shadow: 3px 0px 4px -4px #949494;
 
     /* VARIABLES */
-    
+    --info-panel-height: 5rem;
 }
 
-.mv_list-info-l {
+.mv_list-info-panel-l {
     background-color: #64ac40;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     
-    padding: 1.4rem 1rem;
+    padding: 0rem 1rem;
+    height: var(--info-panel-height);
+
     box-shadow: 
         inset 5px 0px 5px -5px #949494,
         inset -5px 0px 5px -5px #949494,
         inset 0px 5px 5px -5px #949494;
+}
+
+.mv_tasks-container-l {
+    max-height: calc(100vh - var(--info-panel-height));
+    overflow-y: auto;
 }
 
 
