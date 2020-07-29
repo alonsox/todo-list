@@ -23,11 +23,23 @@ daysInMonth["12"] = 31;
 daysInMonth["11"] = 30;
 daysInMonth["12"] = 31;
 
+const monthNames = {}
+monthNames["01"] = 'January';
+monthNames["02"] = 'February';
+monthNames["03"] = 'March';
+monthNames["04"] = 'April';
+monthNames["05"] = 'May';
+monthNames["06"] = 'June';
+monthNames["07"] = 'July';
+monthNames["08"] = 'August';
+monthNames["09"] = 'September';
+monthNames["12"] = 'October';
+monthNames["11"] = 'November';
+monthNames["12"] = 'December';
+
 
 function newEditableNumber(spanClass) {
-    const popup      = newPopupMessage();
     const textSpan   = document.createElement('span');
-    const container  = document.createElement('span');
 
     let lastValue    = '';
     let validationFn = null;
@@ -40,11 +52,6 @@ function newEditableNumber(spanClass) {
     function createUI() {
         // TEXT
         $(textSpan).addClass(spanClass);
-
-        // ASSEMBLE EVERYTHING
-        $(container).addClass('inline-popup');
-        $(container).append(popup.DomElement);
-        $(container).append(textSpan);
     }
 
     function initEvents() {
@@ -76,11 +83,7 @@ function newEditableNumber(spanClass) {
     }
 
     function appendInto(element) {
-        $(element).append(container);
-    }
-
-    function showPopup(msg, timeout=3000) {
-        popup.show(msg, timeout);
+        $(element).append(textSpan);
     }
 
     function isValidText() {
@@ -127,7 +130,6 @@ function newEditableNumber(spanClass) {
     init();
     return {    
         appendInto,
-        showPopup,
         setText,
         getText,
         getLastValue,
@@ -141,12 +143,13 @@ function newEditableNumber(spanClass) {
 }
 
 const DateInput = (function() {
-
+    const popup     = newPopupMessage();
     const yearText  = newEditableNumber('ev_date-year');
     const monthText = newEditableNumber('ev_date-month');
     const dayText   = newEditableNumber('ev_date-day');
     const taskDateContainer = document.createElement('div');
 
+    let validationErrorMsg; // error produced when validating the date or part of it
     let currentListName = null;
     let currentTaskInfo = null;
 
@@ -177,7 +180,8 @@ const DateInput = (function() {
         dayText.appendInto(auxContainer);
 
         // ASSEMBLE EVERYTHING
-        $(taskDateContainer).addClass('ev_task-date');
+        $(taskDateContainer).addClass('ev_task-date inline-popup');
+        $(taskDateContainer).append(popup.DomElement);
         $(taskDateContainer).append(taskDateIcon);
         $(taskDateContainer).append(auxContainer);
     }
@@ -211,7 +215,7 @@ const DateInput = (function() {
                 yearText.disableInput();
                 sendTaskInfo();
             } else {
-                yearText.showPopup('Please enter a valid year', 2500);
+                showPopup(validationErrorMsg, 2500);
                 if (!yearText.isActive()) {
                     yearText.setText(yearText.getLastValue());
                 }
@@ -223,10 +227,7 @@ const DateInput = (function() {
                 monthText.disableInput();
                 sendTaskInfo();
             } else {
-                monthText.showPopup(
-                    'The month is a number between 1 and 12', 
-                    2500
-                );
+                showPopup(validationErrorMsg, 2500);
                 if (!monthText.isActive()) {
                     monthText.setText(monthText.getLastValue());
                 }
@@ -239,15 +240,16 @@ const DateInput = (function() {
                 sendTaskInfo();
             } else {
                 // Improve message formating
-                dayText.showPopup(
-                    'The day is not valid', 
-                    2500
-                );
+                showPopup(validationErrorMsg, 2500);
                 if (!dayText.isActive()) {
                     dayText.setText(dayText.getLastValue());
                 }
             }
         });
+    }
+
+    function showPopup(msg, timeout=3000) {
+        popup.show(msg, timeout);
     }
 
     function sendTaskInfo() {
@@ -308,45 +310,74 @@ const DateInput = (function() {
     }
 
     function validateYear(text) {
-        text = text.trim();
-        if (text == '') {
+
+        let year  = removeLeadingZeros(text.trim());
+        let month = monthText.getText();
+        let day   = removeLeadingZeros(dayText.getText());
+
+        if (year == '') {
+            validationErrorMsg = 'The year cannot be empty';
             return false;
         } else {
-            return true;
+            if (   isLeapYear(year) 
+                && month === '02' 
+                && (day >= 1 && day <= (daysInMonth[month] + 1))) { // +1 for the extra day
+                return true;
+            } else if (day >= 1 && day <= daysInMonth[month]) {
+                return true;
+            } else {
+                validationErrorMsg = `This year is not leap`;
+                return false;
+            }
         }
     }   
 
     function validateMonth(text) {
-        text = text.trim();
-        if (text == '') {
+        let year        = removeLeadingZeros(yearText.getText());
+        let month       = addLeadingZeros(text, 2);
+        let day         = removeLeadingZeros(dayText.getText());
+        let monthNumber = removeLeadingZeros(text.trim());
+
+        if (monthNumber == '') {
+            validationErrorMsg = 'The month cannot be empty';
             return false;
-        } else if (text < 1 || text > 12) {
-            return false;
+        } else if (monthNumber >= 1 && monthNumber <= 12) {
+            // CHECK THE DAY
+            if (   isLeapYear(year) 
+                && month === '02' 
+                && (day >= 1 && day <= (daysInMonth[month] + 1))) { // +1 for the extra day
+                return true;
+            } else if (day >= 1 && day <= daysInMonth[month]) {
+                return true;
+            } else {
+                validationErrorMsg = `The day is not valid for ${monthNames[month]}`;
+                return false;
+            }
         } else {
-            return true;
+            validationErrorMsg = 'The month must be a number between 1 and 12';
+            return false;
         }
     }
 
     function validateDay(text) {
 
-        // todo: DEPENDS ON THE MONTH AND IF IT IS A LEAP YEAR
-        text = removeLeadingZeros(text.trim());
-        if (text == '') {
-            return false;
-        } 
-
         let year  = removeLeadingZeros(yearText.getText());
         let month = monthText.getText();
-        console.log({year, month, monthDays: daysInMonth[month]});
+        let day   = removeLeadingZeros(text.trim());
 
-        if (text > 0 && text <= daysInMonth[month]) {
+        if (day == '') {
+            validationErrorMsg = 'The day cannot be empty';
+            return false;
+        } else if (day >= 1 && day <= daysInMonth[month]) {
             return true;
         } else {
             // Special consideration for February on al leap year 
-            if (isLeapYear(year) && month === '02') {
-                // +1 for the extra day
-                return (text >= 1 && text <= (daysInMonth[month] + 1));
+            if (    isLeapYear(year) 
+                &&  month === '02'
+                &&  (day >= 1 && day <= (daysInMonth[month] + 1)) ) { // +1 for the extra day
+                return true;
             } else {
+                validationErrorMsg = `This day is not valid for ${monthNames[month]}`;
                 return false;
             }
         }
@@ -370,7 +401,6 @@ const DateInput = (function() {
             return false;
         }
     } 
-
 
     init();
     return taskDateContainer;
