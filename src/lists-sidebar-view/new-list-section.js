@@ -1,10 +1,11 @@
 import $ from 'jquery';
 import {PubSub} from '../core/pubsub';
+import {newPopupMessage} from '../core/popup';
 
 function createNewListSection() {
     
     // UI ELEMENTS
-    const popupText  = document.createElement('span');
+    const popup      = newPopupMessage();
     const inputText  = document.createElement('input');
     const addListBtn = document.createElement('i');
     const container  = document.createElement('section');
@@ -15,10 +16,6 @@ function createNewListSection() {
     }
 
     function createUI() {
-        // POPUP TEXT
-        popupText.classList.add('inline-popup-text');
-        popupText.textContent = 'Some text...';
-
         // INPUT FOR THE NEW LIST'S NAME
         inputText.setAttribute('type', 'text');
         inputText.setAttribute('placeholder', "New list's name");
@@ -34,7 +31,7 @@ function createNewListSection() {
 
         // THE SECTION CONTAINER
         container.classList.add('ls_new-list-info', 'inline-popup');
-        container.appendChild(popupText);
+        container.appendChild(popup.DomElement);
         container.appendChild(inputText);
         container.appendChild(addListBtn);
     }
@@ -50,11 +47,11 @@ function createNewListSection() {
 
         PubSub.subscribe('LIST_CREATED', (data) => {
             clearInputText();
-            showPopup(`"${data.listName}" added`, 3000);
+            popup.show(`"${data.listName}" added`, 3000);
         });
 
         PubSub.subscribe('LIST_NOT_CREATED', (data) => {
-            showPopup(`${data.errorMsg}`);
+            popup.show(`${data.errorMsg}`);
         });
     }
 
@@ -62,20 +59,6 @@ function createNewListSection() {
         PubSub.publish('LIST_BEING_CREATED', {
             listName: getListName()
         });
-    }
-
-    function showPopup(msg, timeout=-1) {
-        hidePopup();
-        popupText.textContent = msg;
-        popupText.classList.add('inline-popup-show');
-
-        if (timeout > 0) {
-            setTimeout(hidePopup, timeout);
-        }
-    }
-
-    function hidePopup() {
-        popupText.classList.remove('inline-popup-show');
     }
 
     function getListName() {
