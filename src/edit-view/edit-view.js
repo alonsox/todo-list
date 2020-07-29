@@ -29,8 +29,7 @@ const EditView = (function() {
         $(editViewContainer).append(TaskInfoContainer);
 
         // SHOW MESSAGE
-        // showEditViewMessage();
-        hideEditViewMessage();
+        showEditViewMessage();
         hideTaskInfo();
     }
 
