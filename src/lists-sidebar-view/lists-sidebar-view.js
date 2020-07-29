@@ -8,22 +8,39 @@ const ListSidebarView = (function() {
     const searchBarSection      = createListSearchbar();
     const newListSection        = createNewListSection(); 
     const listsContainerSection = createListContainer();
-    const sidebarContainer      = document.createElement('sidebar');
+    const sidebarContainer      = document.createElement('aside');
 
     function init() {
-        sidebarContainer.appendChild(searchBarSection);
-        sidebarContainer.appendChild(listsContainerSection);
-        sidebarContainer.appendChild(newListSection);
+        $(sidebarContainer).append(searchBarSection);
+        $(sidebarContainer).append(listsContainerSection);
+        $(sidebarContainer).append(newListSection);
+        
+        $(sidebarContainer).addClass('lists-sidebar-l');
     }
 
     function render() {
-        $(sidebarContainer).addClass('lists-sidebar-l');
         $('.content-l').prepend(sidebarContainer);
+    }
+
+    function selectList(listName) {
+        // Select all lists
+        let allLists = listsContainerSection.querySelectorAll(`.ls_tasks-list`);
+
+        // Click on the matching list
+        allLists.forEach((list) => {  
+            let name = $(list).attr('data-list-name');
+            if (name == listName) {
+                // SIMULATE CLICK ON THE LIST
+                $(list.querySelector('.ls_icon-name-container')).trigger('click');
+                return;
+            }
+        });
     }
 
     init();
     return {
-        render
+        render,
+        selectList
     }
 })();
 

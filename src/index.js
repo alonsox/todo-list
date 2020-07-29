@@ -9,4 +9,7 @@ $(document).ready(() => {
     MainView.render();
     ListSidebarView.render();
     TaskManagerController.init();
+
+    // Select all list
+    ListSidebarView.selectList('All');
 });
