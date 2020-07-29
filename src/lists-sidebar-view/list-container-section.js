@@ -62,10 +62,11 @@ function createListContainer() {
 
             /* Show only the lists that have 'data.text' in its name */
             allLists.forEach((list) => {  
-                let listName = list.getAttribute('data-list-name');
-                if (listName.toLowerCase() == 'all') {
+                // NOTE: The strings are compared case independent
+                let listName = list.getAttribute('data-list-name').toLowerCase();
+                if (listName == 'all') {
                     // DO NOTHING
-                } else if (listName.includes(data.text)) {
+                } else if (listName.includes(data.text.toLowerCase())) {
                     list.classList.remove('is-hidden');
                 } else {
                     list.classList.add('is-hidden');
