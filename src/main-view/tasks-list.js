@@ -49,7 +49,11 @@ function newTaskList(listName, tasksList) {
 
         PubSub.subscribe('TASK_CREATED', (data) => {
             if (data.listName == listName) {
-                tasksContainer.appendChild(newTask(listName, data.taskInfo))
+                let aux = newTask(listName, data.taskInfo);
+                $(tasksContainer).prepend(aux);
+                
+                // SIMULATE CLICK
+                $(aux.querySelector('.mv_task-info')).trigger('click');
             }
         });
 
