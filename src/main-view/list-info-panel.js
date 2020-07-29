@@ -35,7 +35,7 @@ const ListInfoPanel = (function() {
         buttonsPanel.appendChild(newTaskBtn);
 
         // THE WHOLE ELEMENT CONTAINER
-        panelContainer.classList.add('mv_list-info-l');
+        panelContainer.classList.add('mv_list-info-panel-l');
         panelContainer.appendChild(listInfoPanel);
         panelContainer.appendChild(buttonsPanel);        
     }

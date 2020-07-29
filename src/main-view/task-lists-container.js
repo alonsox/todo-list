@@ -14,8 +14,7 @@ const TasksListsContainer = (function() {
     }
 
     function createUI() {
-        tasksContainer.classList.add('mv_tasks-container');
-
+        tasksContainer.classList.add('mv_tasks-container-l');
     }
 
     function initEvents() {
